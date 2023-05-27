@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - WelcomeElement
-public struct WelcomeElement: Decodable {
+// MARK: - Dictionary
+public struct Dictionary: Decodable {
     let word: String?
     let phonetics: [Phonetic]?
     let meanings: [Meaning]?
