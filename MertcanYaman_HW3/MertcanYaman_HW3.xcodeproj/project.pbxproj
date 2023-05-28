@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E52FE1712A22BC5F00A77FE9 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52FE1702A22BC5F00A77FE9 /* HomeViewModel.swift */; };
 		E53885492A20B5EA0049531B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53885482A20B5EA0049531B /* AppDelegate.swift */; };
 		E538854B2A20B5EA0049531B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E538854A2A20B5EA0049531B /* SceneDelegate.swift */; };
 		E53885502A20B5EA0049531B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E538854E2A20B5EA0049531B /* Main.storyboard */; };
@@ -16,6 +17,9 @@
 		E574C7BE2A20CE080046D674 /* DictionaryAPI in Frameworks */ = {isa = PBXBuildFile; productRef = E574C7BD2A20CE080046D674 /* DictionaryAPI */; };
 		E574C7C22A20CF260046D674 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574C7C12A20CF260046D674 /* Dictionary.swift */; };
 		E574C7C42A20E8800046D674 /* DictionaryURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574C7C32A20E8800046D674 /* DictionaryURL.swift */; };
+		E58093CE2A23980000D6143D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58093CD2A23980000D6143D /* DetailViewController.swift */; };
+		E58093D02A23980C00D6143D /* DetailView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E58093CF2A23980C00D6143D /* DetailView.storyboard */; };
+		E58093D22A2398E600D6143D /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58093D12A2398E600D6143D /* DetailViewModel.swift */; };
 		E598141F2A229D0100F88161 /* SynonymsURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E598141E2A229D0100F88161 /* SynonymsURL.swift */; };
 		E59814212A229D2100F88161 /* Synonyms.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59814202A229D2100F88161 /* Synonyms.swift */; };
 		E59814232A229D6E00F88161 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59814222A229D6E00F88161 /* UIView+Extension.swift */; };
@@ -26,12 +30,12 @@
 		E5E128032A2260860026A32D /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E128012A2260860026A32D /* RecentSearchTableViewCell.swift */; };
 		E5E128042A2260860026A32D /* RecentSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E128022A2260860026A32D /* RecentSearchTableViewCell.xib */; };
 		E5E128082A2261AF0026A32D /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E128072A2261AF0026A32D /* SplashViewController.swift */; };
-		E5E1280A2A2261BA0026A32D /* SplashView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5E128092A2261BA0026A32D /* SplashView.storyboard */; };
-		E5E1280C2A2261DB0026A32D /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E1280B2A2261DB0026A32D /* SplashView.swift */; };
+		E5E1280C2A2261DB0026A32D /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E1280B2A2261DB0026A32D /* SplashViewModel.swift */; };
 		E5E1280F2A2263750026A32D /* DictionaryService+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E1280E2A2263750026A32D /* DictionaryService+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E52FE1702A22BC5F00A77FE9 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E53885452A20B5EA0049531B /* MertcanYaman_HW3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MertcanYaman_HW3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E53885482A20B5EA0049531B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E538854A2A20B5EA0049531B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +47,9 @@
 		E574C7BB2A20CCF20046D674 /* DictionaryAPI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DictionaryAPI; path = ../DictionaryAPI; sourceTree = "<group>"; };
 		E574C7C12A20CF260046D674 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		E574C7C32A20E8800046D674 /* DictionaryURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryURL.swift; sourceTree = "<group>"; };
+		E58093CD2A23980000D6143D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		E58093CF2A23980C00D6143D /* DetailView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailView.storyboard; sourceTree = "<group>"; };
+		E58093D12A2398E600D6143D /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		E598141E2A229D0100F88161 /* SynonymsURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynonymsURL.swift; sourceTree = "<group>"; };
 		E59814202A229D2100F88161 /* Synonyms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synonyms.swift; sourceTree = "<group>"; };
 		E59814222A229D6E00F88161 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -53,8 +60,7 @@
 		E5E128012A2260860026A32D /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
 		E5E128022A2260860026A32D /* RecentSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentSearchTableViewCell.xib; sourceTree = "<group>"; };
 		E5E128072A2261AF0026A32D /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		E5E128092A2261BA0026A32D /* SplashView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashView.storyboard; sourceTree = "<group>"; };
-		E5E1280B2A2261DB0026A32D /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		E5E1280B2A2261DB0026A32D /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		E5E1280E2A2263750026A32D /* DictionaryService+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DictionaryService+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,7 +102,6 @@
 				E5E127FC2A2260210026A32D /* View */,
 				E574C7BF2A20CF060046D674 /* Models */,
 				E538855F2A20B66E0049531B /* App */,
-				E538854E2A20B5EA0049531B /* Main.storyboard */,
 				E53885562A20B5EB0049531B /* LaunchScreen.storyboard */,
 				E53885592A20B5EB0049531B /* Info.plist */,
 			);
@@ -140,11 +145,22 @@
 			path = DTOs;
 			sourceTree = "<group>";
 		};
+		E58093CC2A2397EF00D6143D /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				E58093CD2A23980000D6143D /* DetailViewController.swift */,
+				E58093CF2A23980C00D6143D /* DetailView.storyboard */,
+				E58093D12A2398E600D6143D /* DetailViewModel.swift */,
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
 		E59814242A229D8F00F88161 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
 				E59814252A229DA100F88161 /* HomeViewController.swift */,
 				E59814272A22A0BD00F88161 /* HomeView.storyboard */,
+				E52FE1702A22BC5F00A77FE9 /* HomeViewModel.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -163,6 +179,7 @@
 		E5E128052A22618A0026A32D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E58093CC2A2397EF00D6143D /* DetailView */,
 				E59814242A229D8F00F88161 /* HomeView */,
 				E5E128062A2261900026A32D /* SplashView */,
 			);
@@ -173,8 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				E5E128072A2261AF0026A32D /* SplashViewController.swift */,
-				E5E128092A2261BA0026A32D /* SplashView.storyboard */,
-				E5E1280B2A2261DB0026A32D /* SplashView.swift */,
+				E538854E2A20B5EA0049531B /* Main.storyboard */,
+				E5E1280B2A2261DB0026A32D /* SplashViewModel.swift */,
 			);
 			path = SplashView;
 			sourceTree = "<group>";
@@ -250,8 +267,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E59814282A22A0BD00F88161 /* HomeView.storyboard in Resources */,
-				E5E1280A2A2261BA0026A32D /* SplashView.storyboard in Resources */,
 				E5E128042A2260860026A32D /* RecentSearchTableViewCell.xib in Resources */,
+				E58093D02A23980C00D6143D /* DetailView.storyboard in Resources */,
 				E53885582A20B5EB0049531B /* LaunchScreen.storyboard in Resources */,
 				E53885552A20B5EB0049531B /* Assets.xcassets in Resources */,
 				E53885502A20B5EA0049531B /* Main.storyboard in Resources */,
@@ -265,9 +282,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5E1280C2A2261DB0026A32D /* SplashView.swift in Sources */,
+				E5E1280C2A2261DB0026A32D /* SplashViewModel.swift in Sources */,
+				E58093CE2A23980000D6143D /* DetailViewController.swift in Sources */,
 				E574C7C42A20E8800046D674 /* DictionaryURL.swift in Sources */,
 				E59814232A229D6E00F88161 /* UIView+Extension.swift in Sources */,
+				E52FE1712A22BC5F00A77FE9 /* HomeViewModel.swift in Sources */,
 				E5E128032A2260860026A32D /* RecentSearchTableViewCell.swift in Sources */,
 				E598141F2A229D0100F88161 /* SynonymsURL.swift in Sources */,
 				E574C7C22A20CF260046D674 /* Dictionary.swift in Sources */,
@@ -276,6 +295,7 @@
 				E53885532A20B5EA0049531B /* MertcanYaman_HW3.xcdatamodeld in Sources */,
 				E5E127FE2A2260330026A32D /* LoadingView.swift in Sources */,
 				E59814262A229DA100F88161 /* HomeViewController.swift in Sources */,
+				E58093D22A2398E600D6143D /* DetailViewModel.swift in Sources */,
 				E5E1280F2A2263750026A32D /* DictionaryService+Extension.swift in Sources */,
 				E59814212A229D2100F88161 /* Synonyms.swift in Sources */,
 				E538854B2A20B5EA0049531B /* SceneDelegate.swift in Sources */,

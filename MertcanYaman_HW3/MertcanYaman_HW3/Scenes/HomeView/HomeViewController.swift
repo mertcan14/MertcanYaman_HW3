@@ -9,7 +9,10 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     
+    var homeViewModel: HomeViewModelProtocol!
     
+    @IBOutlet weak var containerViewBottomConst: NSLayoutConstraint!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchOuterView: UIView!
     @IBOutlet weak var recentTableView: UITableView!
@@ -24,7 +27,10 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        homeViewModel = HomeViewModel()
         recentTableView.register(UINib(nibName: "RecentSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "RecentSearchTableViewCell")
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,6 +38,37 @@ final class HomeViewController: UIViewController {
         searchOuterView.layer.shadowOpacity = 0.6
         searchOuterView.layer.shadowOffset = .zero
         searchOuterView.layer.shadowRadius = 1.5
+    }
+    @IBAction func searchBtnClicked(_ sender: Any) {
+        if searchTextField.text != "" {
+            guard let word = searchTextField.text else { return }
+            let sendVC = UIStoryboard(name: "DetailView", bundle: nil)
+                .instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+            sendVC.detailViewModel = DetailViewModel(word: word)
+            sendVC.modalPresentationStyle = .fullScreen
+            sendVC.modalTransitionStyle = .coverVertical
+            self.present(sendVC, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                UIView.animate(withDuration: 1) {
+                    self.containerViewBottomConst.constant = keyboardSize.height
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if containerViewBottomConst.constant != 0 {
+            UIView.animate(withDuration: 1) {
+                self.containerViewBottomConst.constant = 0
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }
 
