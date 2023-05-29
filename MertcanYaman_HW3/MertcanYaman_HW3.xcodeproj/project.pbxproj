@@ -25,6 +25,9 @@
 		E59814232A229D6E00F88161 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59814222A229D6E00F88161 /* UIView+Extension.swift */; };
 		E59814262A229DA100F88161 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59814252A229DA100F88161 /* HomeViewController.swift */; };
 		E59814282A22A0BD00F88161 /* HomeView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59814272A22A0BD00F88161 /* HomeView.storyboard */; };
+		E5997C5E2A24B7B7009B4FEF /* MeaningTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5997C5C2A24B7B7009B4FEF /* MeaningTableViewCell.swift */; };
+		E5997C5F2A24B7B7009B4FEF /* MeaningTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5997C5D2A24B7B7009B4FEF /* MeaningTableViewCell.xib */; };
+		E5997C612A24CCDF009B4FEF /* DefinitionForCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5997C602A24CCDF009B4FEF /* DefinitionForCell.swift */; };
 		E5E127FE2A2260330026A32D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E127FD2A2260330026A32D /* LoadingView.swift */; };
 		E5E128002A2260460026A32D /* LoadingShowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E127FF2A2260460026A32D /* LoadingShowable.swift */; };
 		E5E128032A2260860026A32D /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E128012A2260860026A32D /* RecentSearchTableViewCell.swift */; };
@@ -55,6 +58,9 @@
 		E59814222A229D6E00F88161 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		E59814252A229DA100F88161 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E59814272A22A0BD00F88161 /* HomeView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeView.storyboard; sourceTree = "<group>"; };
+		E5997C5C2A24B7B7009B4FEF /* MeaningTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningTableViewCell.swift; sourceTree = "<group>"; };
+		E5997C5D2A24B7B7009B4FEF /* MeaningTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeaningTableViewCell.xib; sourceTree = "<group>"; };
+		E5997C602A24CCDF009B4FEF /* DefinitionForCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionForCell.swift; sourceTree = "<group>"; };
 		E5E127FD2A2260330026A32D /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E5E127FF2A2260460026A32D /* LoadingShowable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingShowable.swift; sourceTree = "<group>"; };
 		E5E128012A2260860026A32D /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -132,6 +138,7 @@
 				E574C7C02A20CF110046D674 /* DTOs */,
 				E574C7C32A20E8800046D674 /* DictionaryURL.swift */,
 				E598141E2A229D0100F88161 /* SynonymsURL.swift */,
+				E5997C602A24CCDF009B4FEF /* DefinitionForCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -172,6 +179,8 @@
 				E5E127FF2A2260460026A32D /* LoadingShowable.swift */,
 				E5E128012A2260860026A32D /* RecentSearchTableViewCell.swift */,
 				E5E128022A2260860026A32D /* RecentSearchTableViewCell.xib */,
+				E5997C5C2A24B7B7009B4FEF /* MeaningTableViewCell.swift */,
+				E5997C5D2A24B7B7009B4FEF /* MeaningTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -268,6 +277,7 @@
 			files = (
 				E59814282A22A0BD00F88161 /* HomeView.storyboard in Resources */,
 				E5E128042A2260860026A32D /* RecentSearchTableViewCell.xib in Resources */,
+				E5997C5F2A24B7B7009B4FEF /* MeaningTableViewCell.xib in Resources */,
 				E58093D02A23980C00D6143D /* DetailView.storyboard in Resources */,
 				E53885582A20B5EB0049531B /* LaunchScreen.storyboard in Resources */,
 				E53885552A20B5EB0049531B /* Assets.xcassets in Resources */,
@@ -288,6 +298,7 @@
 				E59814232A229D6E00F88161 /* UIView+Extension.swift in Sources */,
 				E52FE1712A22BC5F00A77FE9 /* HomeViewModel.swift in Sources */,
 				E5E128032A2260860026A32D /* RecentSearchTableViewCell.swift in Sources */,
+				E5997C5E2A24B7B7009B4FEF /* MeaningTableViewCell.swift in Sources */,
 				E598141F2A229D0100F88161 /* SynonymsURL.swift in Sources */,
 				E574C7C22A20CF260046D674 /* Dictionary.swift in Sources */,
 				E5E128002A2260460026A32D /* LoadingShowable.swift in Sources */,
@@ -295,6 +306,7 @@
 				E53885532A20B5EA0049531B /* MertcanYaman_HW3.xcdatamodeld in Sources */,
 				E5E127FE2A2260330026A32D /* LoadingView.swift in Sources */,
 				E59814262A229DA100F88161 /* HomeViewController.swift in Sources */,
+				E5997C612A24CCDF009B4FEF /* DefinitionForCell.swift in Sources */,
 				E58093D22A2398E600D6143D /* DetailViewModel.swift in Sources */,
 				E5E1280F2A2263750026A32D /* DictionaryService+Extension.swift in Sources */,
 				E59814212A229D2100F88161 /* Synonyms.swift in Sources */,

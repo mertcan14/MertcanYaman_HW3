@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MeaningTableViewCell" rowHeight="151" id="KGk-i7-Jjw" customClass="MeaningTableViewCell" customModule="MertcanYaman_HW3" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="151"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="151"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="W9t-uQ-KYd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="151"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cgA-iy-qkz">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 - " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2f1-si-dQn">
+                                        <rect key="frame" x="12" y="9.9999999999999982" width="24" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jK9-Ys-ylN">
+                                        <rect key="frame" x="36" y="11" width="276" height="18"/>
+                                        <fontDescription key="fontDescription" name="Arial-BoldItalicMT" family="Arial" pointSize="16"/>
+                                        <color key="textColor" red="0.2666666667" green="0.42352941179999998" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="jK9-Ys-ylN" secondAttribute="trailing" constant="8" id="7BC-wA-nzL"/>
+                                    <constraint firstItem="jK9-Ys-ylN" firstAttribute="centerY" secondItem="cgA-iy-qkz" secondAttribute="centerY" id="TlX-F9-Q2p"/>
+                                    <constraint firstItem="2f1-si-dQn" firstAttribute="leading" secondItem="cgA-iy-qkz" secondAttribute="leading" constant="12" id="Vrw-us-1j5"/>
+                                    <constraint firstItem="2f1-si-dQn" firstAttribute="centerY" secondItem="cgA-iy-qkz" secondAttribute="centerY" id="hXy-TY-dbe"/>
+                                    <constraint firstAttribute="height" constant="40" id="wyF-dl-aur"/>
+                                    <constraint firstItem="jK9-Ys-ylN" firstAttribute="leading" secondItem="2f1-si-dQn" secondAttribute="trailing" id="zv8-TW-XL9"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1RH-5h-nYF">
+                                <rect key="frame" x="0.0" y="40" width="320" height="111"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="One’s native land; the place or country in which one dwells; the place where one’s ancestors dwell or dwelt." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgM-TS-mtd">
+                                        <rect key="frame" x="12" y="4" width="296" height="89"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzR-mo-yUU">
+                                        <rect key="frame" x="12" y="93" width="296" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="the home of the pine" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uH1-KH-9iA">
+                                        <rect key="frame" x="12" y="93" width="296" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <directionalEdgeInsets key="directionalLayoutMargins" top="4" leading="12" bottom="18" trailing="12"/>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="1RH-5h-nYF" secondAttribute="trailing" id="Seb-Tt-IbI"/>
+                            <constraint firstItem="1RH-5h-nYF" firstAttribute="top" secondItem="cgA-iy-qkz" secondAttribute="bottom" id="XgW-da-HbD"/>
+                            <constraint firstItem="1RH-5h-nYF" firstAttribute="leading" secondItem="W9t-uQ-KYd" secondAttribute="leading" id="yn7-3V-8Za"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="W9t-uQ-KYd" secondAttribute="bottom" id="26p-yc-GzL"/>
+                    <constraint firstItem="W9t-uQ-KYd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PfB-v3-HLi"/>
+                    <constraint firstAttribute="trailing" secondItem="W9t-uQ-KYd" secondAttribute="trailing" id="jZb-Hg-CFp"/>
+                    <constraint firstItem="W9t-uQ-KYd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="sLb-d1-YzS"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="definitionLabel" destination="sgM-TS-mtd" id="N98-F9-TaN"/>
+                <outlet property="exampleLabel" destination="uH1-KH-9iA" id="lrg-WX-vY0"/>
+                <outlet property="exampleTitleLabel" destination="jzR-mo-yUU" id="BS6-ur-SSE"/>
+                <outlet property="indexLabel" destination="2f1-si-dQn" id="r3I-sz-TkT"/>
+                <outlet property="speechLabel" destination="jK9-Ys-ylN" id="g2b-Vd-hyU"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="57.938388625592417"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
