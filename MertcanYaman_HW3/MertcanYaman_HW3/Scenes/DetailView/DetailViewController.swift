@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class DetailViewController: UIViewController, LoadingShowable {
     
@@ -15,7 +16,11 @@ class DetailViewController: UIViewController, LoadingShowable {
         }
     }
     var selectedFilter: Set<String> = []
+    var player:AVPlayer?
+    var playerItem:AVPlayerItem?
     
+    @IBOutlet weak var filterStackView: UIStackView!
+    @IBOutlet weak var audioImageView: UIImageView!
     @IBOutlet weak var phoneticLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dictionaryTableView: UITableView!
@@ -54,6 +59,8 @@ class DetailViewController: UIViewController, LoadingShowable {
         let verbTap = UITapGestureRecognizer(target: self, action: #selector(selectFilter))
         let adjectiveTap = UITapGestureRecognizer(target: self, action: #selector(selectFilter))
         let backTap = UITapGestureRecognizer(target: self, action: #selector(back))
+        let audioTap = UITapGestureRecognizer(target: self, action: #selector(playButtonTapped))
+        audioImageView.addGestureRecognizer(audioTap)
         nounOuterView.addGestureRecognizer(nounTap)
         cancelOuterView.addGestureRecognizer(cancelTap)
         verbOuterView.addGestureRecognizer(verbTap)
@@ -85,18 +92,62 @@ class DetailViewController: UIViewController, LoadingShowable {
     @objc func back() {
         dismiss(animated: true)
     }
+    
+    @objc func playButtonTapped()
+    {
+        do {
+            guard let audio = detailViewModel.getAudio() else { return }
+            let url = URL(string: audio)
+            
+            let playerItem = AVPlayerItem(url: url!)
+            
+            self.player = try AVPlayer(playerItem:playerItem)
+            player!.volume = 1.0
+            player!.play()
+        } catch let error as NSError {
+            self.player = nil
+            print(error.localizedDescription)
+        } catch {
+            print("AVAudioPlayer init failed")
+        }
+    }
 }
 
 extension DetailViewController: DetailViewModelDelegate {
+    func checkAudio(_ audio: String?) {
+        if audio == nil {
+            audioImageView.isHidden = true
+        }
+    }
+    
     func reloadTitleView() {
         DispatchQueue.main.async {
             self.titleLabel.text = self.detailViewModel.getWord().capitalized
-            self.phoneticLabel.text = self.detailViewModel.getPhonetic()
+            guard let phonetic = self.detailViewModel.getPhonetic() else {
+                self.phoneticLabel.isHidden = true
+                return
+            }
+            self.phoneticLabel.text = phonetic
         }
     }
     
     func reloadTableView() {
         dictionaryTableView.reloadData()
+    }
+    
+    func alertFunc(_ message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+            switch action.style {
+            case .default:
+                self.hideLoading()
+                self.dismiss(animated: true)
+            @unknown default:
+                self.hideLoading()
+                self.dismiss(animated: true)
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

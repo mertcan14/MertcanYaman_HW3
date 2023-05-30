@@ -18,11 +18,11 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var recentTableView: UITableView!
     
     var strings: [String] = [
-        "Mert",
-        "Can",
-        "Mertcan",
-        "Yaman",
-        "Mertcan Yaman"
+        "Home",
+        "About",
+        "Filter",
+        "Hello",
+        "Class"
     ]
     
     override func viewDidLoad() {
@@ -45,6 +45,7 @@ final class HomeViewController: UIViewController {
             let sendVC = UIStoryboard(name: "DetailView", bundle: nil)
                 .instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
             sendVC.detailViewModel = DetailViewModel(word: word)
+            searchTextField.text = ""
             sendVC.modalPresentationStyle = .fullScreen
             sendVC.modalTransitionStyle = .coverVertical
             self.present(sendVC, animated: true, completion: nil)

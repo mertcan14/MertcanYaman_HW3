@@ -13,6 +13,8 @@ protocol DetailViewModelDelegate: AnyObject {
     func reloadTitleView()
     func showLoading()
     func hideLoading()
+    func checkAudio(_ audio: String?)
+    func alertFunc(_ message: String)
 }
 
 protocol DetailViewModelProtocol {
@@ -22,7 +24,8 @@ protocol DetailViewModelProtocol {
     func getDataFromDictionary()
     func getDefinitonByIndex(_ index: Int) -> DefinitionForCell?
     func getWord() -> String
-    func getPhonetic() -> String
+    func getPhonetic() -> String?
+    func getAudio() -> String?
 }
 
 final class DetailViewModel {
@@ -30,6 +33,7 @@ final class DetailViewModel {
     var dataDictionary: Dictionary? {
         didSet {
             setDefinitions()
+            checkAudio()
             delegate?.reloadTitleView()
         }
     }
@@ -54,7 +58,7 @@ final class DetailViewModel {
                 guard let firstDictionary = dictionary.first else { return }
                 self.dataDictionary = firstDictionary
             case .failure(let error):
-                print("dictionary: \(String(describing: error.message))")
+                self.delegate?.alertFunc(error.message ?? "Error")
             }
         }
     }
@@ -83,15 +87,41 @@ final class DetailViewModel {
             }
         }
     }
+    
+    func checkAudio() {
+        guard let phonetics = dataDictionary?.phonetics else {
+            delegate?.checkAudio(nil)
+            return
+        }
+        let audio = phonetics.filter { return $0.audio != "" }
+        if audio.count != 0 {
+            delegate?.checkAudio(audio.first?.audio)
+        }else {
+            delegate?.checkAudio(nil)
+        }
+    }
 }
 
 extension DetailViewModel: DetailViewModelProtocol {
+    
+    func getAudio() -> String? {
+        guard let phonetics = dataDictionary?.phonetics else {
+            return nil
+        }
+        let audio = phonetics.filter { return $0.audio != "" }
+        if audio.count != 0 {
+            return audio.first?.audio
+        }else {
+            return nil
+        }
+    }
+    
     func getWord() -> String {
         return self.dataDictionary?.word ?? ""
     }
     
-    func getPhonetic() -> String {
-        return self.dataDictionary?.phonetics?.first?.text ?? ""
+    func getPhonetic() -> String? {
+        return self.dataDictionary?.phonetics?.first?.text
     }
     
     func getDefinitonByIndex(_ index: Int) -> DefinitionForCell? {
