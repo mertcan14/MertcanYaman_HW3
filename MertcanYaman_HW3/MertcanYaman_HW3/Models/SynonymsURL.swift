@@ -25,9 +25,9 @@ public enum SynonymsURL {
         return baseURL + path + endpoint
     }
     
-    var url: URL {
+    var url: URL? {
         guard let url = URL(string: fullPath) else {
-            preconditionFailure("The url used in \(DictionaryURL.self) is not valid")
+            return nil
         }
         return url
     }

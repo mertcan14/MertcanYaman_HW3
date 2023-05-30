@@ -25,9 +25,9 @@ public enum DictionaryURL {
         return baseURL + api + version + category + language + endpoint
     }
     
-    var url: URL {
+    var url: URL? {
         guard let url = URL(string: fullPath) else {
-            preconditionFailure("The url used in \(DictionaryURL.self) is not valid")
+            return nil
         }
         return url
     }

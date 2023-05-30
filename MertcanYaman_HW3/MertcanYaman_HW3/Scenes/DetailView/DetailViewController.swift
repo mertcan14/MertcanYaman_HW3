@@ -27,25 +27,42 @@ class DetailViewController: UIViewController, LoadingShowable {
     @IBOutlet weak var backButton: UIImageView!
     @IBOutlet weak var selectedFilterView: UIView!
     @IBOutlet weak var selectedFilterLabel: UILabel!
-    @IBOutlet weak var adjectiveOuterView: UIView!
-    @IBOutlet weak var verbOuterView: UIView!
     @IBOutlet weak var cancelOuterView: UIView!
-    @IBOutlet weak var nounOuterView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        detailViewModel.getDataFromDictionary()
         setGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        showLoading()
-        setFilterViewBorder(adjectiveOuterView, UIColor.lightGray)
-        setFilterViewBorder(verbOuterView, UIColor.lightGray)
+        detailViewModel.setDefinitions()
+        detailViewModel.checkAudio()
+        reloadTitleView()
         setFilterViewBorder(cancelOuterView, UIColor.blue)
-        setFilterViewBorder(nounOuterView, UIColor.lightGray)
         setFilterViewBorder(selectedFilterView, UIColor.blue)
         dictionaryTableView.register(UINib(nibName: "MeaningTableViewCell", bundle: nil), forCellReuseIdentifier: "MeaningTableViewCell")
+    }
+    
+    func setupFilterButton() {
+        filterStackView.arrangedSubviews.forEach { view in
+            if type(of: view) == UIButton.self {
+                view.removeFromSuperview()
+            }
+        }
+        let strings = detailViewModel.getSpeech()
+        for string in strings {
+            let button = UIButton()
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 12,bottom: 6,right: 12)
+            button.layer.borderColor = UIColor.darkGray.cgColor
+            button.layer.borderWidth = 1
+            button.cornerRadius = 16
+            button.backgroundColor = .white
+            button.setTitleColor(.black, for: .normal)
+            button.setTitle(string.capitalized, for: .normal)
+            button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
+            self.filterStackView.addArrangedSubview(button)
+        }
     }
     
     private func setFilterViewBorder(_ view: UIView, _ color: UIColor) {
@@ -54,39 +71,20 @@ class DetailViewController: UIViewController, LoadingShowable {
     }
     
     private func setGesture() {
-        let nounTap = UITapGestureRecognizer(target: self, action: #selector(selectFilter))
-        let cancelTap = UITapGestureRecognizer(target: self, action: #selector(selectFilter))
-        let verbTap = UITapGestureRecognizer(target: self, action: #selector(selectFilter))
-        let adjectiveTap = UITapGestureRecognizer(target: self, action: #selector(selectFilter))
+        let cancelTap = UITapGestureRecognizer(target: self, action: #selector(removeFilter))
         let backTap = UITapGestureRecognizer(target: self, action: #selector(back))
         let audioTap = UITapGestureRecognizer(target: self, action: #selector(playButtonTapped))
         audioImageView.addGestureRecognizer(audioTap)
-        nounOuterView.addGestureRecognizer(nounTap)
         cancelOuterView.addGestureRecognizer(cancelTap)
-        verbOuterView.addGestureRecognizer(verbTap)
-        adjectiveOuterView.addGestureRecognizer(adjectiveTap)
         backButton.addGestureRecognizer(backTap)
     }
     
-    @objc func selectFilter(_ sender: UITapGestureRecognizer? = nil) {
-        if selectedFilter.count == 0 {
-            cancelOuterView.isHidden = false
-            selectedFilterView.isHidden = false
-        }
-        guard let view = sender?.view else { return }
-        switch view {
-        case cancelOuterView:
-            selectedFilter.removeAll()
-            adjectiveOuterView.isHidden = false
-            nounOuterView.isHidden = false
-            verbOuterView.isHidden = false
-            selectedFilterView.isHidden = true
-        default:
-            guard let text = view.subviews.first as? UILabel else { return }
-            selectedFilter.insert(text.text ?? "")
-        }
-        view.isHidden = true
-        selectedFilterLabel.text = selectedFilter.joined(separator: ", ")
+    @objc func removeFilter() {
+        selectedFilter.removeAll()
+        setupFilterButton()
+        selectedFilterView.isHidden = true
+        cancelOuterView.isHidden = true
+        reloadTableView()
     }
     
     @objc func back() {
@@ -95,25 +93,35 @@ class DetailViewController: UIViewController, LoadingShowable {
     
     @objc func playButtonTapped()
     {
-        do {
-            guard let audio = detailViewModel.getAudio() else { return }
-            let url = URL(string: audio)
-            
-            let playerItem = AVPlayerItem(url: url!)
-            
-            self.player = try AVPlayer(playerItem:playerItem)
-            player!.volume = 1.0
-            player!.play()
-        } catch let error as NSError {
-            self.player = nil
-            print(error.localizedDescription)
-        } catch {
-            print("AVAudioPlayer init failed")
+        guard let audio = detailViewModel.getAudio() else { return }
+        let url = URL(string: audio)
+        
+        let playerItem = AVPlayerItem(url: url!)
+        
+        self.player = AVPlayer(playerItem:playerItem)
+        player!.volume = 1.0
+        player!.play()
+    }
+    
+    @objc func addFilter(_ button: UIButton!) {
+        self.showLoading()
+        if self.selectedFilter.count == 0 {
+            self.cancelOuterView.isHidden = false
+            self.selectedFilterView.isHidden = false
         }
+        button.isHidden = true
+        guard let title = button.titleLabel?.text else { return }
+        self.selectedFilter.insert(title)
+        selectedFilterLabel.text = selectedFilter.joined(separator: ", ")
+        detailViewModel.setDefinitionsBySpeech(self.selectedFilter)
     }
 }
 
 extension DetailViewController: DetailViewModelDelegate {
+    func setupViews() {
+        self.setupFilterButton()
+    }
+    
     func checkAudio(_ audio: String?) {
         if audio == nil {
             audioImageView.isHidden = true
@@ -153,14 +161,25 @@ extension DetailViewController: DetailViewModelDelegate {
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return detailViewModel.numberOfDefinitions
+        if self.selectedFilter.count != 0 {
+            return detailViewModel.numberOfDefinitionsBySpeech
+        }else {
+            return detailViewModel.numberOfDefinitions
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
-        guard let definition = detailViewModel.getDefinitonByIndex(indexPath.row) else { return cell }
-        cell.setup(definition)
-        return cell
+        if self.selectedFilter.count != 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
+            guard let definition = detailViewModel.getDefinitonSpeechByIndex(indexPath.row) else { return cell }
+            cell.setup(definition)
+            return cell
+        }else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
+            guard let definition = detailViewModel.getDefinitonByIndex(indexPath.row) else { return cell }
+            cell.setup(definition)
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

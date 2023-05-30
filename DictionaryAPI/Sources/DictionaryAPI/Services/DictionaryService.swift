@@ -12,11 +12,11 @@ public enum NetworkError: Error {
     case emptyDataError
     case operationFailed
     case connectionError
+    case invalidChar
     case error(Error)
     
     public var message: String? {
         switch self {
-            
         case .operationFailed:
             return "We encountered an unexpected error"
         case .connectionError:
@@ -25,6 +25,8 @@ public enum NetworkError: Error {
             return error.localizedDescription
         case .emptyDataError:
             return "We couldn't find the result you were looking for"
+        case .invalidChar:
+            return "You entered an invalid character"
         }
     }
 }

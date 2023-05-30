@@ -31,11 +31,11 @@
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3hf-zI-ATP">
-                                                <rect key="frame" x="34" y="9" width="324" height="28"/>
+                                                <rect key="frame" x="36" y="9" width="322" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="h60-Ea-yaU"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -44,7 +44,7 @@
                                             <constraint firstItem="4sj-Su-DmD" firstAttribute="leading" secondItem="AoH-Il-1TY" secondAttribute="leading" constant="6" id="EWi-cx-rCr"/>
                                             <constraint firstAttribute="trailing" secondItem="3hf-zI-ATP" secondAttribute="trailing" id="Io7-WL-yrj"/>
                                             <constraint firstItem="3hf-zI-ATP" firstAttribute="centerY" secondItem="AoH-Il-1TY" secondAttribute="centerY" id="XFF-cd-4l0"/>
-                                            <constraint firstItem="3hf-zI-ATP" firstAttribute="leading" secondItem="4sj-Su-DmD" secondAttribute="trailing" constant="4" id="ai6-nD-jfy"/>
+                                            <constraint firstItem="3hf-zI-ATP" firstAttribute="leading" secondItem="4sj-Su-DmD" secondAttribute="trailing" constant="6" id="ai6-nD-jfy"/>
                                             <constraint firstAttribute="height" constant="46" id="k0F-OV-gcZ"/>
                                             <constraint firstItem="4sj-Su-DmD" firstAttribute="centerY" secondItem="AoH-Il-1TY" secondAttribute="centerY" id="oKx-Rz-0Rz"/>
                                         </constraints>

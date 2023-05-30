@@ -10,14 +10,26 @@ import DictionaryAPI
 
 extension DictionaryService {
     func getDictionaryByWord(_ word: String, completion: @escaping ((Result<[Dictionary], NetworkError>) -> Void)) {
-        self.fetchNews(DictionaryURL.word(word).url, completion: completion)
+        guard let url = DictionaryURL.word(word).url else {
+            completion(.failure(NetworkError.invalidChar))
+            return
+        }
+        self.fetchNews(url, completion: completion)
     }
     
     func getSynonymsByWord(_ word: String, completion: @escaping (Result<[Synonyms], NetworkError>) -> Void) {
-        self.fetchNews(SynonymsURL.word(word).url, completion: completion)
+        guard let url = SynonymsURL.word(word).url else {
+            completion(.failure(NetworkError.invalidChar))
+            return
+        }
+        self.fetchNews(url, completion: completion)
     }
     
     func getSynonymsByWordAndMax(_ word: String, _ max: String, completion: @escaping (Result<[Synonyms], NetworkError>) -> Void) {
-        self.fetchNews(SynonymsURL.wordAndMax(word, max).url, completion: completion)
+        guard let url = SynonymsURL.wordAndMax(word, max).url else {
+            completion(.failure(NetworkError.invalidChar))
+            return
+        }
+        self.fetchNews(url, completion: completion)
     }
 }
