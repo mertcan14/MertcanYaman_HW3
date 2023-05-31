@@ -10,11 +10,10 @@ import DictionaryAPI
 
 protocol DetailViewModelDelegate: AnyObject {
     func reloadTableView()
-    func reloadTitleView()
     func showLoading()
     func hideLoading()
     func setupViews()
-    func checkAudio(_ audio: String?)
+    func checkAudio(_ isAudio: Bool)
     func alertFunc(_ message: String)
 }
 
@@ -23,10 +22,10 @@ protocol DetailViewModelProtocol {
     var numberOfDefinitions: Int { get }
     var numberOfDefinitionsBySpeech: Int { get }
     
+    func getSynonymsWords() -> [String]
     func setDefinitionsBySpeech(_ speechs: Set<String>)
     func checkAudio()
     func getSpeech() -> Set<String>
-    func getDataFromDictionary()
     func getDefinitonByIndex(_ index: Int) -> DefinitionForCell?
     func getDefinitonSpeechByIndex(_ index: Int) -> DefinitionForCell?
     func getWord() -> String
@@ -42,7 +41,6 @@ final class DetailViewModel {
     var definitions: [DefinitionForCell] = [] {
         didSet {
             delegate?.reloadTableView()
-            delegate?.setupViews()
             delegate?.hideLoading()
         }
     }
@@ -56,6 +54,8 @@ final class DetailViewModel {
     
     init(dictionary: Dictionary) {
         self.dataDictionary = dictionary
+        self.fetchDataFromSynonyms()
+        self.setDefinitions()
     }
     
     func fetchDataFromSynonyms() {
@@ -99,19 +99,27 @@ final class DetailViewModel {
     
     func checkAudio() {
         guard let phonetics = dataDictionary.phonetics else {
-            delegate?.checkAudio(nil)
+            delegate?.checkAudio(false)
             return
         }
         let audio = phonetics.filter { return $0.audio != "" }
         if audio.count != 0 {
-            delegate?.checkAudio(audio.first?.audio)
+            delegate?.checkAudio(true)
         }else {
-            delegate?.checkAudio(nil)
+            delegate?.checkAudio(false)
         }
     }
 }
 
 extension DetailViewModel: DetailViewModelProtocol {
+    func getSynonymsWords() -> [String] {
+        guard let synonyms = dataSynonyms else { return [] }
+        let words: [String] = synonyms.map { synonym in
+            return synonym.word ?? ""
+        }
+        return words
+    }
+    
     func getDefinitonSpeechByIndex(_ index: Int) -> DefinitionForCell? {
         if 0 <= index && self.numberOfDefinitionsBySpeech > index {
             return definitionsBySpeech[index]
@@ -156,9 +164,5 @@ extension DetailViewModel: DetailViewModelProtocol {
     
     var numberOfDefinitions: Int {
         definitions.count
-    }
-    
-    func getDataFromDictionary() {
-        self.fetchDataFromSynonyms()
     }
 }

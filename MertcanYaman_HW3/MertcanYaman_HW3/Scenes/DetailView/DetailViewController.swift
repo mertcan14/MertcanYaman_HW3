@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-class DetailViewController: UIViewController, LoadingShowable {
+final class DetailViewController: UIViewController, LoadingShowable {
     
     var detailViewModel: DetailViewModelProtocol! {
         didSet {
@@ -35,31 +35,35 @@ class DetailViewController: UIViewController, LoadingShowable {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        detailViewModel.setDefinitions()
         detailViewModel.checkAudio()
-        reloadTitleView()
+        setTitleView()
         setFilterViewBorder(cancelOuterView, UIColor.blue)
         setFilterViewBorder(selectedFilterView, UIColor.blue)
-        dictionaryTableView.register(UINib(nibName: "MeaningTableViewCell", bundle: nil), forCellReuseIdentifier: "MeaningTableViewCell")
+        registerTableCell()
+        setupViews()
+    }
+    
+    func setTitleView() {
+        DispatchQueue.main.async {
+            self.titleLabel.text = self.detailViewModel.getWord().capitalized
+            guard let phonetic = self.detailViewModel.getPhonetic() else {
+                self.phoneticLabel.isHidden = true
+                return
+            }
+            self.phoneticLabel.text = phonetic
+        }
     }
     
     func setupFilterButton() {
         filterStackView.arrangedSubviews.forEach { view in
-            if type(of: view) == UIButton.self {
+            if type(of: view) == CustomButton.self {
                 view.removeFromSuperview()
             }
         }
-        let strings = detailViewModel.getSpeech()
-        for string in strings {
-            let button = UIButton()
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-            button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 12,bottom: 6,right: 12)
-            button.layer.borderColor = UIColor.darkGray.cgColor
-            button.layer.borderWidth = 1
-            button.cornerRadius = 16
-            button.backgroundColor = .white
-            button.setTitleColor(.black, for: .normal)
-            button.setTitle(string.capitalized, for: .normal)
+        let words = detailViewModel.getSpeech()
+        for word in words {
+            let button = CustomButton()
+            button.setTitle(word.capitalized, for: .normal)
             button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
             self.filterStackView.addArrangedSubview(button)
         }
@@ -72,11 +76,13 @@ class DetailViewController: UIViewController, LoadingShowable {
     
     private func setGesture() {
         let cancelTap = UITapGestureRecognizer(target: self, action: #selector(removeFilter))
+        cancelOuterView.addGestureRecognizer(cancelTap)
+        
         let backTap = UITapGestureRecognizer(target: self, action: #selector(back))
+        backButton.addGestureRecognizer(backTap)
+        
         let audioTap = UITapGestureRecognizer(target: self, action: #selector(playButtonTapped))
         audioImageView.addGestureRecognizer(audioTap)
-        cancelOuterView.addGestureRecognizer(cancelTap)
-        backButton.addGestureRecognizer(backTap)
     }
     
     @objc func removeFilter() {
@@ -99,7 +105,6 @@ class DetailViewController: UIViewController, LoadingShowable {
         let playerItem = AVPlayerItem(url: url!)
         
         self.player = AVPlayer(playerItem:playerItem)
-        player!.volume = 1.0
         player!.play()
     }
     
@@ -115,6 +120,11 @@ class DetailViewController: UIViewController, LoadingShowable {
         selectedFilterLabel.text = selectedFilter.joined(separator: ", ")
         detailViewModel.setDefinitionsBySpeech(self.selectedFilter)
     }
+    
+    private func registerTableCell() {
+        dictionaryTableView.register(UINib(nibName: "MeaningTableViewCell", bundle: nil), forCellReuseIdentifier: "MeaningTableViewCell")
+        dictionaryTableView.register(UINib(nibName: "SynonymTableViewCell", bundle: nil), forCellReuseIdentifier: "SynonymTableViewCell")
+    }
 }
 
 extension DetailViewController: DetailViewModelDelegate {
@@ -122,20 +132,9 @@ extension DetailViewController: DetailViewModelDelegate {
         self.setupFilterButton()
     }
     
-    func checkAudio(_ audio: String?) {
-        if audio == nil {
+    func checkAudio(_ isAudio: Bool) {
+        if !isAudio {
             audioImageView.isHidden = true
-        }
-    }
-    
-    func reloadTitleView() {
-        DispatchQueue.main.async {
-            self.titleLabel.text = self.detailViewModel.getWord().capitalized
-            guard let phonetic = self.detailViewModel.getPhonetic() else {
-                self.phoneticLabel.isHidden = true
-                return
-            }
-            self.phoneticLabel.text = phonetic
         }
     }
     
@@ -162,23 +161,38 @@ extension DetailViewController: DetailViewModelDelegate {
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.selectedFilter.count != 0 {
-            return detailViewModel.numberOfDefinitionsBySpeech
+            return detailViewModel.numberOfDefinitionsBySpeech + 1
         }else {
-            return detailViewModel.numberOfDefinitions
+            return detailViewModel.numberOfDefinitions + 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if self.selectedFilter.count != 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
-            guard let definition = detailViewModel.getDefinitonSpeechByIndex(indexPath.row) else { return cell }
-            cell.setup(definition)
-            return cell
+            if detailViewModel.numberOfDefinitionsBySpeech == indexPath.row {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SynonymTableViewCell") as! SynonymTableViewCell
+                let words = detailViewModel.getSynonymsWords()
+                cell.setup(words)
+                return cell
+            }else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
+                guard let definition = detailViewModel.getDefinitonSpeechByIndex(indexPath.row) else { return cell }
+                cell.setup(definition)
+                return cell
+            }
+            
         }else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
-            guard let definition = detailViewModel.getDefinitonByIndex(indexPath.row) else { return cell }
-            cell.setup(definition)
-            return cell
+            if detailViewModel.numberOfDefinitions == indexPath.row {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SynonymTableViewCell") as! SynonymTableViewCell
+                let words = detailViewModel.getSynonymsWords()
+                cell.setup(words)
+                return cell
+            }else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
+                guard let definition = detailViewModel.getDefinitonByIndex(indexPath.row) else { return cell }
+                cell.setup(definition)
+                return cell
+            }
         }
     }
     
