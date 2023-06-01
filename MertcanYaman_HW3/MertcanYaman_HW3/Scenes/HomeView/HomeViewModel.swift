@@ -11,6 +11,7 @@ import DictionaryAPI
 protocol HomeViewModelDelegate: AnyObject {
     func alertFunc(_ message: String)
     func goDetailPage(_ dictionary: Dictionary)
+    func addWordHistory(_ word: String)
 }
 
 protocol HomeViewModelProtocol {
@@ -29,6 +30,7 @@ final class HomeViewModel {
             switch response {
             case.success(let dictionary):
                 guard let firstDictionary = dictionary.first else { return }
+                self.delegate?.addWordHistory(word)
                 self.delegate?.goDetailPage(firstDictionary)
             case .failure(let error):
                 self.delegate?.alertFunc(error.message ?? "Error")

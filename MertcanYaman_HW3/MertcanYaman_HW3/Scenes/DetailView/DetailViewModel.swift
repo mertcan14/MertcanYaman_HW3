@@ -15,6 +15,7 @@ protocol DetailViewModelDelegate: AnyObject {
     func setupViews()
     func checkAudio(_ isAudio: Bool)
     func alertFunc(_ message: String)
+    func goDetailPage(_ dictionary: Dictionary)
 }
 
 protocol DetailViewModelProtocol {
@@ -22,6 +23,7 @@ protocol DetailViewModelProtocol {
     var numberOfDefinitions: Int { get }
     var numberOfDefinitionsBySpeech: Int { get }
     
+    func checkSynonymWords() -> Bool
     func getSynonymsWords() -> [String]
     func setDefinitionsBySpeech(_ speechs: Set<String>)
     func checkAudio()
@@ -32,15 +34,19 @@ protocol DetailViewModelProtocol {
     func getPhonetic() -> String?
     func getAudio() -> String?
     func setDefinitions()
+    func fetchDataFromDictionary(_ word: String)
 }
 
 final class DetailViewModel {
     var delegate: DetailViewModelDelegate?
     var dataDictionary: Dictionary
-    var dataSynonyms: [Synonyms]?
-    var definitions: [DefinitionForCell] = [] {
+    var dataSynonyms: [Synonyms]? {
         didSet {
             delegate?.reloadTableView()
+        }
+    }
+    var definitions: [DefinitionForCell] = [] {
+        didSet {
             delegate?.hideLoading()
         }
     }
@@ -109,9 +115,27 @@ final class DetailViewModel {
             delegate?.checkAudio(false)
         }
     }
+    
+    func fetchDataFromDictionary(_ word: String) {
+        DictionaryService.shared.getDictionaryByWord(word) { [weak self] response in
+            guard let self else { return }
+            switch response {
+            case.success(let dictionary):
+                guard let firstDictionary = dictionary.first else { return }
+                self.delegate?.goDetailPage(firstDictionary)
+            case .failure(let error):
+                self.delegate?.alertFunc(error.message ?? "Error")
+            }
+        }
+    }
 }
 
 extension DetailViewModel: DetailViewModelProtocol {
+    func checkSynonymWords() -> Bool {
+        guard let synonym = self.dataSynonyms else { return false }
+        return synonym.isEmpty
+    }
+    
     func getSynonymsWords() -> [String] {
         guard let synonyms = dataSynonyms else { return [] }
         let words: [String] = synonyms.map { synonym in

@@ -15,6 +15,6 @@ class RecentSearchTableViewCell: UITableViewCell {
     @IBOutlet weak var containerView: UIView!
     
     func setup(_ word: String) {
-        wordLabel.text = word
+        wordLabel.text = word.capitalized
     }
 }

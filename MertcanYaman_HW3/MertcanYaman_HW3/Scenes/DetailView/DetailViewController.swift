@@ -18,6 +18,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
     var selectedFilter: Set<String> = []
     var player:AVPlayer?
     var playerItem:AVPlayerItem?
+    var checkSynonym: Bool = false
     
     @IBOutlet weak var filterStackView: UIStackView!
     @IBOutlet weak var audioImageView: UIImageView!
@@ -32,6 +33,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setGesture()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -125,6 +127,14 @@ final class DetailViewController: UIViewController, LoadingShowable {
         dictionaryTableView.register(UINib(nibName: "MeaningTableViewCell", bundle: nil), forCellReuseIdentifier: "MeaningTableViewCell")
         dictionaryTableView.register(UINib(nibName: "SynonymTableViewCell", bundle: nil), forCellReuseIdentifier: "SynonymTableViewCell")
     }
+    
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        guard let word = notification.userInfo,
+                let wordd = word["word"] as? String
+                else { return }
+        showLoading()
+        detailViewModel.fetchDataFromDictionary(wordd)
+    }
 }
 
 extension DetailViewController: DetailViewModelDelegate {
@@ -160,43 +170,51 @@ extension DetailViewController: DetailViewModelDelegate {
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.checkSynonym = detailViewModel.checkSynonymWords()
         if self.selectedFilter.count != 0 {
-            return detailViewModel.numberOfDefinitionsBySpeech + 1
+            return detailViewModel.numberOfDefinitionsBySpeech + (self.checkSynonym ? 0 : 1)
         }else {
-            return detailViewModel.numberOfDefinitions + 1
+            return detailViewModel.numberOfDefinitions + (self.checkSynonym ? 0 : 1)
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if self.selectedFilter.count != 0 {
-            if detailViewModel.numberOfDefinitionsBySpeech == indexPath.row {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "SynonymTableViewCell") as! SynonymTableViewCell
+        
+        if !self.checkSynonym {
+            let totalRows = tableView.numberOfRows(inSection: indexPath.section)
+            if totalRows - 1 == indexPath.row {
+                let synonymCell = tableView.dequeueReusableCell(withIdentifier: "SynonymTableViewCell") as! SynonymTableViewCell
                 let words = detailViewModel.getSynonymsWords()
-                cell.setup(words)
-                return cell
-            }else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
-                guard let definition = detailViewModel.getDefinitonSpeechByIndex(indexPath.row) else { return cell }
-                cell.setup(definition)
-                return cell
+                synonymCell.setup(words)
+                return synonymCell
             }
+        }
+        
+        if self.selectedFilter.count != 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
+            guard let definition = detailViewModel.getDefinitonSpeechByIndex(indexPath.row) else { return cell }
+            cell.setup(definition)
+            return cell
             
         }else {
-            if detailViewModel.numberOfDefinitions == indexPath.row {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "SynonymTableViewCell") as! SynonymTableViewCell
-                let words = detailViewModel.getSynonymsWords()
-                cell.setup(words)
-                return cell
-            }else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
-                guard let definition = detailViewModel.getDefinitonByIndex(indexPath.row) else { return cell }
-                cell.setup(definition)
-                return cell
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
+            guard let definition = detailViewModel.getDefinitonByIndex(indexPath.row) else { return cell }
+            cell.setup(definition)
+            return cell
         }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func goDetailPage(_ dictionary: Dictionary) {
+        hideLoading()
+        let sendVC = UIStoryboard(name: "DetailView", bundle: nil)
+            .instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        sendVC.detailViewModel = DetailViewModel(dictionary: dictionary)
+        sendVC.modalPresentationStyle = .fullScreen
+        sendVC.modalTransitionStyle = .coverVertical
+        self.present(sendVC, animated: true, completion: nil)
     }
 }

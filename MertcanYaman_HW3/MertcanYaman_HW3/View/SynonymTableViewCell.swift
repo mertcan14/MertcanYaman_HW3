@@ -26,7 +26,7 @@ class SynonymTableViewCell: UITableViewCell {
                 for index in 0 ..< words.count {
                     let button = UIButton()
                     button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-                    button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 12,bottom: 6,right: 12)
+                    button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 18,bottom: 6,right: 18)
                     button.layer.borderColor = UIColor.darkGray.cgColor
                     button.layer.borderWidth = 1
                     button.cornerRadius = 16
@@ -42,7 +42,8 @@ class SynonymTableViewCell: UITableViewCell {
                 for index in 0 ..< words.count - 1 {
                     let button = UIButton()
                     button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-                    button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 12,bottom: 6,right: 12)
+                    button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 18,bottom: 6,right: 18)
+                    button.titleLabel?.minimumScaleFactor = 0.5
                     button.layer.borderColor = UIColor.darkGray.cgColor
                     button.layer.borderWidth = 1
                     button.cornerRadius = 16
@@ -71,6 +72,7 @@ class SynonymTableViewCell: UITableViewCell {
     }
     
     @objc func addFilter(_ button: UIButton!) {
-        print(button.titleLabel?.text)
+        guard let word = button.titleLabel?.text else { return }
+        NotificationCenter.default.post(name: Notification.Name("NotificationIdentifier"), object: nil, userInfo: ["word": word])
     }
 }
