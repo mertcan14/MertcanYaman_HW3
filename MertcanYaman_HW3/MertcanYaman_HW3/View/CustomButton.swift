@@ -8,20 +8,20 @@
 import UIKit
 
 class CustomButton: UIButton {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
     }
     
-    private func setup() {
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        self.contentEdgeInsets = UIEdgeInsets(top: 6,left: 12,bottom: 6,right: 12)
-        self.layer.borderColor = UIColor.darkGray.cgColor
+    func setup(_ horizontal: Double, _ vertical: Double, _ fontSize: Double) {
+        self.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
+        self.titleLabel?.minimumScaleFactor = 0.5
+        self.contentEdgeInsets = UIEdgeInsets(top: vertical,left: horizontal,bottom: vertical,right: horizontal)
+        self.layer.borderColor = UIColor.gray.cgColor
         self.layer.borderWidth = 1
         self.cornerRadius = 16
         self.backgroundColor = .white

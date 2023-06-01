@@ -10,26 +10,38 @@ import DictionaryAPI
 
 extension DictionaryService {
     func getDictionaryByWord(_ word: String, completion: @escaping ((Result<[Dictionary], NetworkError>) -> Void)) {
-        guard let url = DictionaryURL.word(word).url else {
-            completion(.failure(NetworkError.invalidChar))
-            return
+        if ReachabilityService.isConnectedToInternet() {
+            guard let url = DictionaryURL.word(word).url else {
+                completion(.failure(NetworkError.invalidChar))
+                return
+            }
+            self.fetchNews(url, completion: completion)
+        }else {
+            completion(.failure(.connectionError))
         }
-        self.fetchNews(url, completion: completion)
     }
     
     func getSynonymsByWord(_ word: String, completion: @escaping (Result<[Synonyms], NetworkError>) -> Void) {
-        guard let url = SynonymsURL.word(word).url else {
-            completion(.failure(NetworkError.invalidChar))
-            return
+        if ReachabilityService.isConnectedToInternet() {
+            guard let url = SynonymsURL.word(word).url else {
+                completion(.failure(NetworkError.invalidChar))
+                return
+            }
+            self.fetchNews(url, completion: completion)
+        }else {
+            completion(.failure(.connectionError))
         }
-        self.fetchNews(url, completion: completion)
     }
     
     func getSynonymsByWordAndMax(_ word: String, _ max: String, completion: @escaping (Result<[Synonyms], NetworkError>) -> Void) {
-        guard let url = SynonymsURL.wordAndMax(word, max).url else {
-            completion(.failure(NetworkError.invalidChar))
-            return
+        if ReachabilityService.isConnectedToInternet() {
+            guard let url = SynonymsURL.wordAndMax(word, max).url else {
+                completion(.failure(NetworkError.invalidChar))
+                return
+            }
+            self.fetchNews(url, completion: completion)
+        }else {
+            completion(.failure(.connectionError))
         }
-        self.fetchNews(url, completion: completion)
     }
 }

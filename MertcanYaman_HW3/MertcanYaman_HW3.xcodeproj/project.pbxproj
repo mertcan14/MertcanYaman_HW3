@@ -28,6 +28,7 @@
 		E59814232A229D6E00F88161 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59814222A229D6E00F88161 /* UIView+Extension.swift */; };
 		E59814262A229DA100F88161 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59814252A229DA100F88161 /* HomeViewController.swift */; };
 		E59814282A22A0BD00F88161 /* HomeView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59814272A22A0BD00F88161 /* HomeView.storyboard */; };
+		E59833DD2A28C3E500128825 /* IsFirstScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59833DC2A28C3E500128825 /* IsFirstScreen.swift */; };
 		E5997C5E2A24B7B7009B4FEF /* MeaningTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5997C5C2A24B7B7009B4FEF /* MeaningTableViewCell.swift */; };
 		E5997C5F2A24B7B7009B4FEF /* MeaningTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5997C5D2A24B7B7009B4FEF /* MeaningTableViewCell.xib */; };
 		E5997C612A24CCDF009B4FEF /* DefinitionForCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5997C602A24CCDF009B4FEF /* DefinitionForCell.swift */; };
@@ -64,6 +65,7 @@
 		E59814222A229D6E00F88161 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		E59814252A229DA100F88161 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E59814272A22A0BD00F88161 /* HomeView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeView.storyboard; sourceTree = "<group>"; };
+		E59833DC2A28C3E500128825 /* IsFirstScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsFirstScreen.swift; sourceTree = "<group>"; };
 		E5997C5C2A24B7B7009B4FEF /* MeaningTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningTableViewCell.swift; sourceTree = "<group>"; };
 		E5997C5D2A24B7B7009B4FEF /* MeaningTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeaningTableViewCell.xib; sourceTree = "<group>"; };
 		E5997C602A24CCDF009B4FEF /* DefinitionForCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionForCell.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		E53885472A20B5EA0049531B /* MertcanYaman_HW3 */ = {
 			isa = PBXGroup;
 			children = (
+				E59833DB2A28C3D500128825 /* Helper */,
 				E5E1280D2A22635A0026A32D /* Extensions */,
 				E5E128052A22618A0026A32D /* Scenes */,
 				E5E127FC2A2260210026A32D /* View */,
@@ -176,6 +179,14 @@
 				E52FE1702A22BC5F00A77FE9 /* HomeViewModel.swift */,
 			);
 			path = HomeView;
+			sourceTree = "<group>";
+		};
+		E59833DB2A28C3D500128825 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				E59833DC2A28C3E500128825 /* IsFirstScreen.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		E5E127FC2A2260210026A32D /* View */ = {
@@ -314,6 +325,7 @@
 				E574C7C22A20CF260046D674 /* Dictionary.swift in Sources */,
 				E5E128002A2260460026A32D /* LoadingShowable.swift in Sources */,
 				E53885492A20B5EA0049531B /* AppDelegate.swift in Sources */,
+				E59833DD2A28C3E500128825 /* IsFirstScreen.swift in Sources */,
 				E53885532A20B5EA0049531B /* MertcanYaman_HW3.xcdatamodeld in Sources */,
 				E5E127FE2A2260330026A32D /* LoadingView.swift in Sources */,
 				E59814262A229DA100F88161 /* HomeViewController.swift in Sources */,

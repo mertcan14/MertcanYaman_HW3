@@ -24,14 +24,8 @@ class SynonymTableViewCell: UITableViewCell {
             bottomView.isHidden = true
             DispatchQueue.main.async {
                 for index in 0 ..< words.count {
-                    let button = UIButton()
-                    button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-                    button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 18,bottom: 6,right: 18)
-                    button.layer.borderColor = UIColor.darkGray.cgColor
-                    button.layer.borderWidth = 1
-                    button.cornerRadius = 16
-                    button.backgroundColor = .white
-                    button.setTitleColor(.black, for: .normal)
+                    let button = CustomButton()
+                    button.setup(18, 6, 16)
                     button.setTitle(words[index].capitalized, for: .normal)
                     button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
                     self.upperView.addArrangedSubview(button)
@@ -40,29 +34,16 @@ class SynonymTableViewCell: UITableViewCell {
         }else {
             DispatchQueue.main.async {
                 for index in 0 ..< words.count - 1 {
-                    let button = UIButton()
-                    button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-                    button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 18,bottom: 6,right: 18)
-                    button.titleLabel?.minimumScaleFactor = 0.5
-                    button.layer.borderColor = UIColor.darkGray.cgColor
-                    button.layer.borderWidth = 1
-                    button.cornerRadius = 16
-                    button.backgroundColor = .white
-                    button.setTitleColor(.black, for: .normal)
+                    let button = CustomButton()
+                    button.setup(18, 6, 16)
                     button.setTitle(words[index].capitalized, for: .normal)
                     button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
                     self.upperView.addArrangedSubview(button)
                 }
             }
             DispatchQueue.main.async {
-                let button = UIButton()
-                button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-                button.contentEdgeInsets = UIEdgeInsets(top: 6,left: 12,bottom: 6,right: 12)
-                button.layer.borderColor = UIColor.darkGray.cgColor
-                button.layer.borderWidth = 1
-                button.cornerRadius = 16
-                button.backgroundColor = .white
-                button.setTitleColor(.black, for: .normal)
+                let button = CustomButton()
+                button.setup(18, 6, 16)
                 button.setTitle(words[words.count - 1].capitalized, for: .normal)
                 button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
                 self.bottomView.addArrangedSubview(button)

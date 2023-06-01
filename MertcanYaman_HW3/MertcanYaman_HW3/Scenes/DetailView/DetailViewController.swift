@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 final class DetailViewController: UIViewController, LoadingShowable {
     
@@ -15,9 +14,6 @@ final class DetailViewController: UIViewController, LoadingShowable {
             detailViewModel.delegate = self
         }
     }
-    var selectedFilter: Set<String> = []
-    var player:AVPlayer?
-    var playerItem:AVPlayerItem?
     var checkSynonym: Bool = false
     
     @IBOutlet weak var filterStackView: UIStackView!
@@ -33,7 +29,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setGesture()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
+        setNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +61,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
         let words = detailViewModel.getSpeech()
         for word in words {
             let button = CustomButton()
+            button.setup(12, 6, 14)
             button.setTitle(word.capitalized, for: .normal)
             button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
             self.filterStackView.addArrangedSubview(button)
@@ -88,7 +85,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
     }
     
     @objc func removeFilter() {
-        selectedFilter.removeAll()
+        detailViewModel.removeAllSelectedFilter()
         setupFilterButton()
         selectedFilterView.isHidden = true
         cancelOuterView.isHidden = true
@@ -101,26 +98,20 @@ final class DetailViewController: UIViewController, LoadingShowable {
     
     @objc func playButtonTapped()
     {
-        guard let audio = detailViewModel.getAudio() else { return }
-        let url = URL(string: audio)
-        
-        let playerItem = AVPlayerItem(url: url!)
-        
-        self.player = AVPlayer(playerItem:playerItem)
-        player!.play()
+        detailViewModel.startAudio()
     }
     
     @objc func addFilter(_ button: UIButton!) {
         self.showLoading()
-        if self.selectedFilter.count == 0 {
+        if detailViewModel.numberOfSelectedFilter == 0 {
             self.cancelOuterView.isHidden = false
             self.selectedFilterView.isHidden = false
         }
         button.isHidden = true
         guard let title = button.titleLabel?.text else { return }
-        self.selectedFilter.insert(title)
-        selectedFilterLabel.text = selectedFilter.joined(separator: ", ")
-        detailViewModel.setDefinitionsBySpeech(self.selectedFilter)
+        detailViewModel.addSelectedFilter(title)
+        guard let selectedFilters = detailViewModel.getSelectedFilter() else { return }
+        selectedFilterLabel.text = selectedFilters.joined(separator: ", ")
     }
     
     private func registerTableCell() {
@@ -135,9 +126,23 @@ final class DetailViewController: UIViewController, LoadingShowable {
         showLoading()
         detailViewModel.fetchDataFromDictionary(wordd)
     }
+    
+    func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
+    }
 }
 
 extension DetailViewController: DetailViewModelDelegate {
+    
+    func goSplashPage() {
+        hideLoading()
+        let sendVC = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "SplashViewController") as! SplashViewController
+        sendVC.modalPresentationStyle = .fullScreen
+        sendVC.modalTransitionStyle = .coverVertical
+        self.present(sendVC, animated: true, completion: nil)
+    }
+    
     func setupViews() {
         self.setupFilterButton()
     }
@@ -154,16 +159,11 @@ extension DetailViewController: DetailViewModelDelegate {
     
     func alertFunc(_ message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
-            switch action.style {
-            case .default:
-                self.hideLoading()
-                self.dismiss(animated: true)
-            @unknown default:
-                self.hideLoading()
-                self.dismiss(animated: true)
-            }
-        }))
+        let action = UIAlertAction(title: "OK", style: .cancel) { UIAlertAction in
+            self.hideLoading()
+            self.dismiss(animated: true)
+        }
+        alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -171,7 +171,7 @@ extension DetailViewController: DetailViewModelDelegate {
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.checkSynonym = detailViewModel.checkSynonymWords()
-        if self.selectedFilter.count != 0 {
+        if detailViewModel.numberOfSelectedFilter != 0 {
             return detailViewModel.numberOfDefinitionsBySpeech + (self.checkSynonym ? 0 : 1)
         }else {
             return detailViewModel.numberOfDefinitions + (self.checkSynonym ? 0 : 1)
@@ -190,7 +190,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        if self.selectedFilter.count != 0 {
+        if detailViewModel.numberOfSelectedFilter != 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MeaningTableViewCell") as! MeaningTableViewCell
             guard let definition = detailViewModel.getDefinitonSpeechByIndex(indexPath.row) else { return cell }
             cell.setup(definition)

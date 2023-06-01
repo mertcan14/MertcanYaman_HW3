@@ -23,33 +23,32 @@ class SplashViewController: UIViewController, LoadingShowable {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        checkInternet(0)
+        splashViewModel.checkConnection(0)
     }
     
     @IBAction func tryBtnClicked(_ sender: Any) {
-        checkInternet(0.5)
+        showLoading()
+        splashViewModel.checkConnection(0.5)
+    }
+}
+
+extension SplashViewController: SplashViewModelDelegate {
+    func goBackPage() {
+        dismiss(animated: true)
     }
     
     func showContentView() {
         self.contentView.isHidden = false
     }
     
-    private func checkInternet(_ time: Double) {
-        showLoading()
-        showContentView()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
-            if self.splashViewModel.checkConnection() {
-                let sendVC = UIStoryboard(name: "HomeView", bundle: nil)
-                    .instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-                sendVC.modalPresentationStyle = .fullScreen
-                sendVC.modalTransitionStyle = .coverVertical
-                self.present(sendVC, animated: true, completion: nil)
-            }
-        }
+    func goHomePage() {
+        let sendVC = UIStoryboard(name: "HomeView", bundle: nil)
+            .instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        sendVC.modalPresentationStyle = .fullScreen
+        sendVC.modalTransitionStyle = .coverVertical
+        self.present(sendVC, animated: true, completion: nil)
     }
-}
-
-extension SplashViewController: SplashViewModelDelegate {
+    
     func hideContentView() {
         self.contentView.isHidden = true
     }

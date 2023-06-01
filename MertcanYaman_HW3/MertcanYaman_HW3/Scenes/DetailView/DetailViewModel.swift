@@ -7,38 +7,42 @@
 
 import Foundation
 import DictionaryAPI
+import AVFoundation
 
 protocol DetailViewModelDelegate: AnyObject {
     func reloadTableView()
     func showLoading()
     func hideLoading()
-    func setupViews()
     func checkAudio(_ isAudio: Bool)
     func alertFunc(_ message: String)
     func goDetailPage(_ dictionary: Dictionary)
+    func goSplashPage()
 }
 
 protocol DetailViewModelProtocol {
     var delegate: DetailViewModelDelegate? { get set }
     var numberOfDefinitions: Int { get }
     var numberOfDefinitionsBySpeech: Int { get }
+    var numberOfSelectedFilter: Int { get }
     
+    func addSelectedFilter(_ title: String)
+    func getSelectedFilter() -> Set<String>?
+    func removeAllSelectedFilter()
     func checkSynonymWords() -> Bool
     func getSynonymsWords() -> [String]
-    func setDefinitionsBySpeech(_ speechs: Set<String>)
     func checkAudio()
     func getSpeech() -> Set<String>
     func getDefinitonByIndex(_ index: Int) -> DefinitionForCell?
     func getDefinitonSpeechByIndex(_ index: Int) -> DefinitionForCell?
     func getWord() -> String
     func getPhonetic() -> String?
-    func getAudio() -> String?
-    func setDefinitions()
     func fetchDataFromDictionary(_ word: String)
+    func startAudio()
 }
 
 final class DetailViewModel {
     var delegate: DetailViewModelDelegate?
+    var player:AVPlayer?
     var dataDictionary: Dictionary
     var dataSynonyms: [Synonyms]? {
         didSet {
@@ -57,21 +61,41 @@ final class DetailViewModel {
         }
     }
     var speechs: Set<String> = []
+    var selectedFilter: Set<String> = []
     
     init(dictionary: Dictionary) {
         self.dataDictionary = dictionary
         self.fetchDataFromSynonyms()
         self.setDefinitions()
+        self.setAudio()
     }
     
     func fetchDataFromSynonyms() {
+        delegate?.showLoading()
         DictionaryService.shared.getSynonymsByWord(self.dataDictionary.word ?? "") { [weak self] response in
             guard let self else { return }
             switch response {
             case.success(let synonyms):
+                self.delegate?.hideLoading()
                 self.dataSynonyms = synonyms
             case .failure(let error):
+                self.delegate?.hideLoading()
                 print("synonyms: \(String(describing: error.message))")
+            }
+        }
+    }
+    
+    func setAudio() {
+        guard let phonetics = dataDictionary.phonetics else {
+            return
+        }
+        phonetics.forEach { phonetic in
+            if phonetic.audio != "" {
+                guard let audio = phonetic.audio else { return }
+                let url = URL(string: audio)
+                let playerItem = AVPlayerItem(url: url!)
+                self.player = AVPlayer(playerItem:playerItem)
+                return
             }
         }
     }
@@ -95,7 +119,6 @@ final class DetailViewModel {
     func setDefinitionsBySpeech(_ speechs: Set<String>) {
         var definitionForCell: [DefinitionForCell] = []
         self.definitions.forEach { definition in
-            print(definition.speech)
             if speechs.contains(definition.speech.capitalized) {
                 definitionForCell.append(definition)
             }
@@ -124,13 +147,34 @@ final class DetailViewModel {
                 guard let firstDictionary = dictionary.first else { return }
                 self.delegate?.goDetailPage(firstDictionary)
             case .failure(let error):
-                self.delegate?.alertFunc(error.message ?? "Error")
+                if error.message == NetworkError.connectionError.message {
+                    self.delegate?.goSplashPage()
+                }else {
+                    self.delegate?.alertFunc(error.message ?? "Error")
+                }
             }
         }
     }
 }
 
 extension DetailViewModel: DetailViewModelProtocol {
+    func removeAllSelectedFilter() {
+        self.selectedFilter.removeAll()
+    }
+    
+    func addSelectedFilter(_ title: String) {
+        self.selectedFilter.insert(title)
+        setDefinitionsBySpeech(self.selectedFilter)
+    }
+    
+    func getSelectedFilter() -> Set<String>? {
+        return selectedFilter
+    }
+    
+    var numberOfSelectedFilter: Int {
+        self.selectedFilter.count
+    }
+    
     func checkSynonymWords() -> Bool {
         guard let synonym = self.dataSynonyms else { return false }
         return synonym.isEmpty
@@ -158,18 +202,6 @@ extension DetailViewModel: DetailViewModelProtocol {
     func getSpeech() -> Set<String> {
         self.speechs
     }
-
-    func getAudio() -> String? {
-        guard let phonetics = dataDictionary.phonetics else {
-            return nil
-        }
-        let audio = phonetics.filter { return $0.audio != "" }
-        if audio.count != 0 {
-            return audio.first?.audio
-        }else {
-            return nil
-        }
-    }
     
     func getWord() -> String {
         return self.dataDictionary.word ?? ""
@@ -188,5 +220,10 @@ extension DetailViewModel: DetailViewModelProtocol {
     
     var numberOfDefinitions: Int {
         definitions.count
+    }
+    
+    func startAudio() {
+        guard let player = player else { return }
+        player.play()
     }
 }
