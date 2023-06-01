@@ -21,18 +21,6 @@ extension DictionaryService {
         }
     }
     
-    func getSynonymsByWord(_ word: String, completion: @escaping (Result<[Synonyms], NetworkError>) -> Void) {
-        if ReachabilityService.isConnectedToInternet() {
-            guard let url = SynonymsURL.word(word).url else {
-                completion(.failure(NetworkError.invalidChar))
-                return
-            }
-            self.fetchNews(url, completion: completion)
-        }else {
-            completion(.failure(.connectionError))
-        }
-    }
-    
     func getSynonymsByWordAndMax(_ word: String, _ max: String, completion: @escaping (Result<[Synonyms], NetworkError>) -> Void) {
         if ReachabilityService.isConnectedToInternet() {
             guard let url = SynonymsURL.wordAndMax(word, max).url else {

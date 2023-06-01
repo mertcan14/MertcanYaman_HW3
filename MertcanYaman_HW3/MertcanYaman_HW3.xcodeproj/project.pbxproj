@@ -43,7 +43,7 @@
 
 /* Begin PBXFileReference section */
 		E52FE1702A22BC5F00A77FE9 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		E53885452A20B5EA0049531B /* MertcanYaman_HW3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MertcanYaman_HW3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E53885452A20B5EA0049531B /* World of Words.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "World of Words.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E53885482A20B5EA0049531B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E538854A2A20B5EA0049531B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E538854F2A20B5EA0049531B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		E53885462A20B5EA0049531B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E53885452A20B5EA0049531B /* MertcanYaman_HW3.app */,
+				E53885452A20B5EA0049531B /* World of Words.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -254,7 +254,7 @@
 				E574C7BD2A20CE080046D674 /* DictionaryAPI */,
 			);
 			productName = MertcanYaman_HW3;
-			productReference = E53885452A20B5EA0049531B /* MertcanYaman_HW3.app */;
+			productReference = E53885452A20B5EA0049531B /* World of Words.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -495,7 +495,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mertcanyaman.MertcanYaman-HW3";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "World of Words";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -522,7 +522,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mertcanyaman.MertcanYaman-HW3";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "World of Words";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

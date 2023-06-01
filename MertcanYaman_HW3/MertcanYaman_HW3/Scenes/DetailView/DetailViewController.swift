@@ -59,12 +59,16 @@ final class DetailViewController: UIViewController, LoadingShowable {
             }
         }
         let words = detailViewModel.getSpeech()
+        let fontSize: Double = UIScreen.main.bounds.size.width > 380 ? 14 : 13
+        guard let filterSpeech = detailViewModel.getSelectedFilter() else { return }
         for word in words {
-            let button = CustomButton()
-            button.setup(12, 6, 14)
-            button.setTitle(word.capitalized, for: .normal)
-            button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
-            self.filterStackView.addArrangedSubview(button)
+            if !filterSpeech.contains(word.capitalized) {
+                let button = CustomButton()
+                button.setup(12, 6, fontSize)
+                button.setTitle(word.capitalized, for: .normal)
+                button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
+                self.filterStackView.addArrangedSubview(button)
+            }
         }
     }
     
@@ -82,6 +86,20 @@ final class DetailViewController: UIViewController, LoadingShowable {
         
         let audioTap = UITapGestureRecognizer(target: self, action: #selector(playButtonTapped))
         audioImageView.addGestureRecognizer(audioTap)
+        
+        let removeTap = UITapGestureRecognizer(target: self, action: #selector(removeLastFilter))
+        self.selectedFilterView.addGestureRecognizer(removeTap)
+    }
+    
+    @objc func removeLastFilter() {
+        detailViewModel.removeLastFilter()
+        guard let selectedFilters = detailViewModel.getSelectedFilter() else { return }
+        if selectedFilters.count == 0 {
+            removeFilter()
+        }else {
+            setupFilterButton()
+            selectedFilterLabel.text = selectedFilters.joined(separator: ", ")
+        }
     }
     
     @objc func removeFilter() {
@@ -133,7 +151,6 @@ final class DetailViewController: UIViewController, LoadingShowable {
 }
 
 extension DetailViewController: DetailViewModelDelegate {
-    
     func goSplashPage() {
         hideLoading()
         let sendVC = UIStoryboard(name: "Main", bundle: nil)
@@ -144,7 +161,12 @@ extension DetailViewController: DetailViewModelDelegate {
     }
     
     func setupViews() {
-        self.setupFilterButton()
+        if detailViewModel.numberOfSpeech <= 1 {
+            filterStackView.isHidden = true
+        }else {
+            self.setupFilterButton()
+        }
+        
     }
     
     func checkAudio(_ isAudio: Bool) {
@@ -209,6 +231,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func goDetailPage(_ dictionary: Dictionary) {
+        removeFilter()
         hideLoading()
         let sendVC = UIStoryboard(name: "DetailView", bundle: nil)
             .instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController

@@ -25,7 +25,7 @@ class SynonymTableViewCell: UITableViewCell {
             DispatchQueue.main.async {
                 for index in 0 ..< words.count {
                     let button = CustomButton()
-                    button.setup(18, 6, 16)
+                    button.setup(16, 6, 15)
                     button.setTitle(words[index].capitalized, for: .normal)
                     button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
                     self.upperView.addArrangedSubview(button)
@@ -35,7 +35,7 @@ class SynonymTableViewCell: UITableViewCell {
             DispatchQueue.main.async {
                 for index in 0 ..< words.count - 1 {
                     let button = CustomButton()
-                    button.setup(18, 6, 16)
+                    button.setup(16, 6, 15)
                     button.setTitle(words[index].capitalized, for: .normal)
                     button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
                     self.upperView.addArrangedSubview(button)
@@ -43,7 +43,7 @@ class SynonymTableViewCell: UITableViewCell {
             }
             DispatchQueue.main.async {
                 let button = CustomButton()
-                button.setup(18, 6, 16)
+                button.setup(16, 6, 15)
                 button.setTitle(words[words.count - 1].capitalized, for: .normal)
                 button.addTarget(self, action: #selector(self.addFilter), for: .touchUpInside)
                 self.bottomView.addArrangedSubview(button)

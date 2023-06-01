@@ -11,45 +11,52 @@
         <!--Splash View Controller-->
         <scene sceneID="fxM-Tu-zx3">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" id="6UW-Fm-xCA" customClass="SplashViewController" customModule="MertcanYaman_HW3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashViewController" id="6UW-Fm-xCA" customClass="SplashViewController" customModule="World_of_Words" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gYu-OG-lQQ">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="1LD-c8-aPK">
-                                <rect key="frame" x="75" y="241.33333333333334" width="240" height="374.33333333333326"/>
+                                <rect key="frame" x="39" y="235.33333333333334" width="312" height="386.33333333333326"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noConnection" translatesAutoresizingMaskIntoConstraints="NO" id="eND-FO-SQJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                                        <rect key="frame" x="36" y="0.0" width="240" height="240"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="eND-FO-SQJ" secondAttribute="height" id="Peq-ta-9KT"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Do Not Have An Internet Connection" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2p-7q-Kii">
-                                        <rect key="frame" x="20.333333333333329" y="264" width="199.66666666666669" height="50.333333333333314"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Do Not Have An Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2p-7q-Kii">
+                                        <rect key="frame" x="0.0" y="264" width="312" height="50.333333333333314"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lr-KP-YeM">
-                                        <rect key="frame" x="12" y="338.33333333333326" width="216" height="36"/>
+                                        <rect key="frame" x="0.0" y="338.33333333333326" width="312" height="48"/>
                                         <color key="backgroundColor" red="0.2666666667" green="0.42352941179999998" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="BbV-bH-mwV"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="BOt-kd-4yI"/>
                                         </constraints>
                                         <color key="tintColor" red="0.2666666667" green="0.42352941179999998" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Try Again">
                                             <color key="baseBackgroundColor" red="0.2666666667" green="0.42352941179999998" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="18"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="tryBtnClicked:" destination="6UW-Fm-xCA" eventType="touchUpInside" id="ZtU-L9-QGb"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="0lr-KP-YeM" firstAttribute="leading" secondItem="1LD-c8-aPK" secondAttribute="leading" constant="12" id="3al-bN-v7W"/>
-                                    <constraint firstAttribute="trailing" secondItem="0lr-KP-YeM" secondAttribute="trailing" constant="12" id="9Ve-L4-LXE"/>
+                                    <constraint firstAttribute="trailing" secondItem="K2p-7q-Kii" secondAttribute="trailing" id="OL0-dn-Nbj"/>
+                                    <constraint firstItem="0lr-KP-YeM" firstAttribute="leading" secondItem="1LD-c8-aPK" secondAttribute="leading" id="Wcv-3a-KOO"/>
+                                    <constraint firstAttribute="trailing" secondItem="0lr-KP-YeM" secondAttribute="trailing" id="ibW-tr-hnK"/>
+                                    <constraint firstItem="K2p-7q-Kii" firstAttribute="leading" secondItem="1LD-c8-aPK" secondAttribute="leading" id="zPL-95-S6P"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -58,7 +65,8 @@
                         <constraints>
                             <constraint firstItem="1LD-c8-aPK" firstAttribute="centerX" secondItem="mjB-YS-3Hj" secondAttribute="centerX" id="GJc-sR-UsB"/>
                             <constraint firstItem="1LD-c8-aPK" firstAttribute="centerY" secondItem="mjB-YS-3Hj" secondAttribute="centerY" id="R7C-vg-Kup"/>
-                            <constraint firstItem="1LD-c8-aPK" firstAttribute="width" secondItem="gYu-OG-lQQ" secondAttribute="width" multiplier="0.615385" id="gIK-Vf-iIj"/>
+                            <constraint firstItem="1LD-c8-aPK" firstAttribute="width" secondItem="gYu-OG-lQQ" secondAttribute="width" multiplier="0.8" id="gIK-Vf-iIj"/>
+                            <constraint firstItem="eND-FO-SQJ" firstAttribute="width" secondItem="gYu-OG-lQQ" secondAttribute="width" multiplier="0.615385" id="lyA-qF-JuR"/>
                         </constraints>
                     </view>
                     <connections>
@@ -67,7 +75,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rqv-P6-NRB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-640" y="4"/>
+            <point key="canvasLocation" x="-640" y="3.5545023696682461"/>
         </scene>
     </scenes>
     <resources>

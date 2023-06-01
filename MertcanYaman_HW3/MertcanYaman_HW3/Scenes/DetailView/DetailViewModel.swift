@@ -24,9 +24,11 @@ protocol DetailViewModelProtocol {
     var numberOfDefinitions: Int { get }
     var numberOfDefinitionsBySpeech: Int { get }
     var numberOfSelectedFilter: Int { get }
+    var numberOfSpeech: Int { get }
     
+    func removeLastFilter()
     func addSelectedFilter(_ title: String)
-    func getSelectedFilter() -> Set<String>?
+    func getSelectedFilter() -> [String]?
     func removeAllSelectedFilter()
     func checkSynonymWords() -> Bool
     func getSynonymsWords() -> [String]
@@ -61,7 +63,7 @@ final class DetailViewModel {
         }
     }
     var speechs: Set<String> = []
-    var selectedFilter: Set<String> = []
+    var selectedFilter: [String] = []
     
     init(dictionary: Dictionary) {
         self.dataDictionary = dictionary
@@ -72,11 +74,12 @@ final class DetailViewModel {
     
     func fetchDataFromSynonyms() {
         delegate?.showLoading()
-        DictionaryService.shared.getSynonymsByWord(self.dataDictionary.word ?? "") { [weak self] response in
+        DictionaryService.shared.getSynonymsByWordAndMax(self.dataDictionary.word ?? "", "5") { [weak self] response in
             guard let self else { return }
             switch response {
             case.success(let synonyms):
                 self.delegate?.hideLoading()
+                print(synonyms.count)
                 self.dataSynonyms = synonyms
             case .failure(let error):
                 self.delegate?.hideLoading()
@@ -116,7 +119,7 @@ final class DetailViewModel {
         self.definitions = definitionForCell
     }
     
-    func setDefinitionsBySpeech(_ speechs: Set<String>) {
+    func setDefinitionsBySpeech(_ speechs: [String]) {
         var definitionForCell: [DefinitionForCell] = []
         self.definitions.forEach { definition in
             if speechs.contains(definition.speech.capitalized) {
@@ -158,16 +161,27 @@ final class DetailViewModel {
 }
 
 extension DetailViewModel: DetailViewModelProtocol {
+    func removeLastFilter() {
+        if selectedFilter.count >= 1 {
+            self.selectedFilter.remove(at: selectedFilter.count - 1)
+            setDefinitionsBySpeech(self.selectedFilter)
+        }
+    }
+    
+    var numberOfSpeech: Int {
+        self.speechs.count
+    }
+    
     func removeAllSelectedFilter() {
         self.selectedFilter.removeAll()
     }
     
     func addSelectedFilter(_ title: String) {
-        self.selectedFilter.insert(title)
+        self.selectedFilter.append(title)
         setDefinitionsBySpeech(self.selectedFilter)
     }
     
-    func getSelectedFilter() -> Set<String>? {
+    func getSelectedFilter() -> [String]? {
         return selectedFilter
     }
     

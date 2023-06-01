@@ -11,14 +11,11 @@ public enum SynonymsURL {
     private var baseURL: String { return "https://api.datamuse.com" }
     private var path: String { return "/words" }
     
-    case word(String)
     case wordAndMax(String, String)
     
     private var fullPath: String {
         var endpoint:String
         switch self {
-        case .word(let wordString):
-            endpoint = "?rel_syn=\(wordString)&max=5"
         case .wordAndMax(let wordString, let maxString):
             endpoint = "?rel_syn=\(wordString)&max=\(maxString)"
         }

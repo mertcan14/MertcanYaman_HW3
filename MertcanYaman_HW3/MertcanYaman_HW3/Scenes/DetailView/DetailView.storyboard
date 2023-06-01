@@ -11,7 +11,7 @@
         <!--Detail View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" id="Y6W-OH-hqX" customClass="DetailViewController" customModule="MertcanYaman_HW3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="Y6W-OH-hqX" customClass="DetailViewController" customModule="World_of_Words" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +62,7 @@
                                                     <constraint firstItem="q7s-oJ-uOC" firstAttribute="top" secondItem="8Uh-UW-4e2" secondAttribute="top" id="poZ-S2-1fR"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Rwc-uK-Lsq">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="firstBaseline" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Rwc-uK-Lsq">
                                                 <rect key="frame" x="0.0" y="82.666666666666657" width="0.0" height="0.0"/>
                                                 <subviews>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6z9-41-7pn">
@@ -92,9 +92,9 @@
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d6d-oy-BE8">
                                                         <rect key="frame" x="0.0" y="-14" width="24" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9KX-y9-qCr">
-                                                                <rect key="frame" x="12" y="6" width="0.0" height="18"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="9KX-y9-qCr">
+                                                                <rect key="frame" x="12" y="7.3333333333333419" width="0.0" height="15.666666666666664"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -164,7 +164,7 @@
                         <outlet property="dictionaryTableView" destination="le7-uX-cgq" id="1rs-xT-aGd"/>
                         <outlet property="filterStackView" destination="Rwc-uK-Lsq" id="rTD-Fo-StI"/>
                         <outlet property="phoneticLabel" destination="mAX-Pr-4FH" id="PdO-DY-3g3"/>
-                        <outlet property="selectedFilterLabel" destination="9KX-y9-qCr" id="gda-ks-1Rt"/>
+                        <outlet property="selectedFilterLabel" destination="9KX-y9-qCr" id="NcJ-4M-Elo"/>
                         <outlet property="selectedFilterView" destination="d6d-oy-BE8" id="uBx-3O-b51"/>
                         <outlet property="titleLabel" destination="ZtH-fa-oRl" id="85j-Lv-yZc"/>
                     </connections>
