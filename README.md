@@ -54,8 +54,12 @@ You can quickly learn the meaning by searching for the word you are looking for.
 | `word` | `string` | *required* Searched Word |
 | `maxLength` | `string` | Number of data requested |
 
+## Video
+
+[![Watch the video](https://i9.ytimg.com/vi_webp/05_upWFfTiQ/mq2.webp?sqp=CNzk56MG-oaymwEmCMACELQB8quKqQMa8AEB-AHkAYAC4AOKAgwIABABGCggNyh_MA8=&rs=AOn4CLA0K7JbgK4loXOBQeX99qCA1GV9RA)](https://youtu.be/05_upWFfTiQ)
+
 ## ScreenShoots
 
-![](https://github.com/mertcan14/MertcanYaman_HW3/blob/main/ScreenShot/1.png)
-![](https://github.com/mertcan14/MertcanYaman_HW3/blob/main/ScreenShot/2.png)
-![](https://github.com/mertcan14/MertcanYaman_HW3/blob/main/ScreenShot/3.png)
+<img src="https://github.com/mertcan14/MertcanYaman_HW3/blob/main/ScreenShot/1.png" height="500">
+<img src="https://github.com/mertcan14/MertcanYaman_HW3/blob/main/ScreenShot/2.png" height="500">
+<img src="https://github.com/mertcan14/MertcanYaman_HW3/blob/main/ScreenShot/3.png" height="500">
