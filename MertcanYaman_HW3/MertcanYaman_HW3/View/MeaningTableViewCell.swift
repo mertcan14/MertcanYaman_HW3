@@ -23,6 +23,9 @@ final class MeaningTableViewCell: UITableViewCell {
             exampleLabel.isHidden = false
             exampleTitleLabel.isHidden = false
             exampleLabel.text = example
+        }else {
+            exampleLabel.isHidden = true
+            exampleTitleLabel.isHidden = true
         }
     }
 }
