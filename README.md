@@ -56,7 +56,11 @@ You can quickly learn the meaning by searching for the word you are looking for.
 
 ## Video
 
-[![Watch the video](https://i9.ytimg.com/vi_webp/05_upWFfTiQ/mq2.webp?sqp=CNzk56MG-oaymwEmCMACELQB8quKqQMa8AEB-AHkAYAC4AOKAgwIABABGCggNyh_MA8=&rs=AOn4CLA0K7JbgK4loXOBQeX99qCA1GV9RA)](https://youtu.be/05_upWFfTiQ)
+
+https://github.com/mertcan14/MertcanYaman_HW3/assets/61551987/87ea0d0e-a09a-4d9d-80e2-5e9ee4c742dd
+
+
+- YouTube: https://youtu.be/05_upWFfTiQ
 
 ## ScreenShoots
 
