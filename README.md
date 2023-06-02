@@ -31,6 +31,13 @@ You can quickly learn the meaning by searching for the word you are looking for.
 ✔️ Package Dependencies: Alamofire(5.7.1)
 
 ✔️ Written Modules: DictionaryAPI, MyCoreData
+
+## Requirements
+
+- **iOS 16.0+**
+
+- **Xcode 14.0+**
+
 ## API Usage
 
 #### Get Data From Dictionary Api
