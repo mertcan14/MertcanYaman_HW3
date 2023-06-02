@@ -8,6 +8,7 @@
 import Foundation
 import DictionaryAPI
 
+// MARK: Protocol SplashViewModelDelegate
 protocol SplashViewModelDelegate: AnyObject {
     func hideLoading()
     func hideContentView()
@@ -16,12 +17,14 @@ protocol SplashViewModelDelegate: AnyObject {
     func goBackPage()
 }
 
+// MARK: Protocol SplashViewModelProtocol
 protocol SplashViewModelProtocol {
     var delegate: SplashViewModelDelegate? { get set }
     
     func checkConnection(_ time: Double)
 }
 
+// MARK: Splash View Model
 final class SplashViewModel {
     
     weak var delegate: SplashViewModelDelegate?
@@ -43,6 +46,7 @@ final class SplashViewModel {
     }
 }
 
+// MARK: Extension SplashViewModelProtocol
 extension SplashViewModel: SplashViewModelProtocol {
     
     func checkConnection(_ time: Double) {

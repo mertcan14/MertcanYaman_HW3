@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum DictionaryURL {
+enum DictionaryURL {
     private var baseURL: String { return "https://api.dictionaryapi.dev" }
     private var api: String { return "/api" }
     private var version: String { return "/v2" }
@@ -19,7 +19,17 @@ public enum DictionaryURL {
     private var fullPath: String {
         var endpoint:String
         switch self {
-        case .word(let wordString):
+        case .word(var wordString):
+            let words = wordString.split(separator: " ")
+            wordString = ""
+            words.forEach { splitWord in
+                if splitWord == words[words.count - 1] {
+                    wordString += splitWord
+                }else {
+                    wordString += splitWord + "%20"
+                }
+                
+            }
             endpoint = "/\(wordString)"
         }
         return baseURL + api + version + category + language + endpoint

@@ -9,6 +9,7 @@ import Foundation
 import DictionaryAPI
 
 extension DictionaryService {
+    /// Fetch data from dictionary API by word, provides internet control
     func getDictionaryByWord(_ word: String, completion: @escaping ((Result<[Dictionary], NetworkError>) -> Void)) {
         if ReachabilityService.isConnectedToInternet() {
             guard let url = DictionaryURL.word(word).url else {
@@ -21,6 +22,7 @@ extension DictionaryService {
         }
     }
     
+    /// Fetch data from synonyms API by word and max, provides internet control
     func getSynonymsByWordAndMax(_ word: String, _ max: String, completion: @escaping (Result<[Synonyms], NetworkError>) -> Void) {
         if ReachabilityService.isConnectedToInternet() {
             guard let url = SynonymsURL.wordAndMax(word, max).url else {

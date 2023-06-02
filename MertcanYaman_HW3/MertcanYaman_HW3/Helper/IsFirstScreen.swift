@@ -7,7 +7,8 @@
 
 import Foundation
 
-class IsFirstScreen {
+/// Checking if splash screen is the first page. If it is the first page, it is get dismiss func if it is not Home Page.
+final class IsFirstScreen {
     static let shared = IsFirstScreen()
     
     var isFirst: Bool = true

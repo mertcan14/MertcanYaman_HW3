@@ -7,8 +7,7 @@
 
 import UIKit
 
-class SynonymTableViewCell: UITableViewCell {
-
+final class SynonymTableViewCell: UITableViewCell {
 
     @IBOutlet weak var bottomView: UIStackView!
     @IBOutlet weak var upperView: UIStackView!

@@ -9,18 +9,21 @@ import UIKit
 
 final class HomeViewController: UIViewController, LoadingShowable {
     
+    // MARK: - Variable Definitions
     var homeViewModel: HomeViewModelProtocol! {
         didSet {
             homeViewModel.delegate = self
         }
     }
     
+    // MARK: - IBOutlet Definitions
     @IBOutlet weak var containerViewBottomConst: NSLayoutConstraint!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchOuterView: UIView!
     @IBOutlet weak var recentTableView: UITableView!
     
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         homeViewModel = HomeViewModel()
@@ -33,11 +36,7 @@ final class HomeViewController: UIViewController, LoadingShowable {
         setShadow()
     }
     
-    func getWordHistory() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        homeViewModel.fetchWordFromCore(appDelegate)
-    }
-    
+    // MARK: - @IBAction Methods
     @IBAction func searchBtnClicked(_ sender: Any) {
         showLoading()
         self.view.endEditing(true)
@@ -46,6 +45,12 @@ final class HomeViewController: UIViewController, LoadingShowable {
         }else {
             alertFunc("Searched word cannot be empty")
         }
+    }
+    
+    // MARK: - Funcs
+    func getWordHistory() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        homeViewModel.fetchWordFromCore(appDelegate)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -84,7 +89,7 @@ final class HomeViewController: UIViewController, LoadingShowable {
         searchOuterView.layer.shadowRadius = 1.5
     }
 }
-
+// MARK: - Extension UITableViewDelegate
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         homeViewModel.numberOfWordHistory
@@ -105,6 +110,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - Extension HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
     func goSplashPage() {
         hideLoading()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomButton: UIButton {
+final class CustomButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +23,7 @@ class CustomButton: UIButton {
         self.contentEdgeInsets = UIEdgeInsets(top: vertical,left: horizontal,bottom: vertical,right: horizontal)
         self.layer.borderColor = UIColor.gray.cgColor
         self.layer.borderWidth = 1
-        self.cornerRadius = 16
+        self.cornerRadius = 14
         self.backgroundColor = .white
         self.setTitleColor(.black, for: .normal)
     }

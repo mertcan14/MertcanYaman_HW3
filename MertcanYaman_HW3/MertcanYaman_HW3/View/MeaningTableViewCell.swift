@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeaningTableViewCell: UITableViewCell {
+final class MeaningTableViewCell: UITableViewCell {
     
     @IBOutlet weak var exampleLabel: UILabel!
     @IBOutlet weak var exampleTitleLabel: UILabel!

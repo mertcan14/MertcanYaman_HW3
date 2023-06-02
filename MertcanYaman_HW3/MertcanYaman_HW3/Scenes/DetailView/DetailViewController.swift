@@ -9,6 +9,7 @@ import UIKit
 
 final class DetailViewController: UIViewController, LoadingShowable {
     
+    // MARK: - Variable Definitions
     var detailViewModel: DetailViewModelProtocol! {
         didSet {
             detailViewModel.delegate = self
@@ -16,6 +17,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
     }
     var checkSynonym: Bool = false
     
+    // MARK: - IBOutlet Definitions
     @IBOutlet weak var filterStackView: UIStackView!
     @IBOutlet weak var audioImageView: UIImageView!
     @IBOutlet weak var phoneticLabel: UILabel!
@@ -26,6 +28,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
     @IBOutlet weak var selectedFilterLabel: UILabel!
     @IBOutlet weak var cancelOuterView: UIView!
     
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setGesture()
@@ -41,18 +44,29 @@ final class DetailViewController: UIViewController, LoadingShowable {
         setupViews()
     }
     
-    func setTitleView() {
+    // MARK: - Setup Funcs
+    private func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
+    }
+    
+    private func registerTableCell() {
+        dictionaryTableView.register(UINib(nibName: "MeaningTableViewCell", bundle: nil), forCellReuseIdentifier: "MeaningTableViewCell")
+        dictionaryTableView.register(UINib(nibName: "SynonymTableViewCell", bundle: nil), forCellReuseIdentifier: "SynonymTableViewCell")
+    }
+    
+    private func setTitleView() {
+        guard let info = self.detailViewModel.getWord() else { return }
         DispatchQueue.main.async {
-            self.titleLabel.text = self.detailViewModel.getWord().capitalized
-            guard let phonetic = self.detailViewModel.getPhonetic() else {
+            self.titleLabel.text = info.0.capitalized
+            if "" == info.1 {
                 self.phoneticLabel.isHidden = true
                 return
             }
-            self.phoneticLabel.text = phonetic
+            self.phoneticLabel.text = info.1
         }
     }
     
-    func setupFilterButton() {
+    private func setupFilterButton() {
         filterStackView.arrangedSubviews.forEach { view in
             if type(of: view) == CustomButton.self {
                 view.removeFromSuperview()
@@ -91,6 +105,7 @@ final class DetailViewController: UIViewController, LoadingShowable {
         self.selectedFilterView.addGestureRecognizer(removeTap)
     }
     
+    // MARK: - Funcs
     @objc func removeLastFilter() {
         detailViewModel.removeLastFilter()
         guard let selectedFilters = detailViewModel.getSelectedFilter() else { return }
@@ -132,11 +147,6 @@ final class DetailViewController: UIViewController, LoadingShowable {
         selectedFilterLabel.text = selectedFilters.joined(separator: ", ")
     }
     
-    private func registerTableCell() {
-        dictionaryTableView.register(UINib(nibName: "MeaningTableViewCell", bundle: nil), forCellReuseIdentifier: "MeaningTableViewCell")
-        dictionaryTableView.register(UINib(nibName: "SynonymTableViewCell", bundle: nil), forCellReuseIdentifier: "SynonymTableViewCell")
-    }
-    
     @objc func methodOfReceivedNotification(notification: Notification) {
         guard let word = notification.userInfo,
                 let wordd = word["word"] as? String
@@ -144,13 +154,12 @@ final class DetailViewController: UIViewController, LoadingShowable {
         showLoading()
         detailViewModel.fetchDataFromDictionary(wordd)
     }
-    
-    func setNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
-    }
 }
 
+// MARK: - Extension DetailViewModelDelegate
 extension DetailViewController: DetailViewModelDelegate {
+    
+    // MARK: - Go Another Page Funcs
     func goSplashPage() {
         hideLoading()
         let sendVC = UIStoryboard(name: "Main", bundle: nil)
@@ -160,13 +169,24 @@ extension DetailViewController: DetailViewModelDelegate {
         self.present(sendVC, animated: true, completion: nil)
     }
     
+    func goDetailPage(_ dictionary: Dictionary) {
+        removeFilter()
+        hideLoading()
+        let sendVC = UIStoryboard(name: "DetailView", bundle: nil)
+            .instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        sendVC.detailViewModel = DetailViewModel(dictionary: dictionary)
+        sendVC.modalPresentationStyle = .fullScreen
+        sendVC.modalTransitionStyle = .coverVertical
+        self.present(sendVC, animated: true, completion: nil)
+    }
+    
+    // MARK: - DetailViewModelDelegate Funcs
     func setupViews() {
         if detailViewModel.numberOfSpeech <= 1 {
             filterStackView.isHidden = true
         }else {
             self.setupFilterButton()
         }
-        
     }
     
     func checkAudio(_ isAudio: Bool) {
@@ -190,19 +210,20 @@ extension DetailViewController: DetailViewModelDelegate {
     }
 }
 
+// MARK: - Extension UITableViewDelegate UITableViewDataSource
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.checkSynonym = detailViewModel.checkSynonymWords()
         if detailViewModel.numberOfSelectedFilter != 0 {
-            return detailViewModel.numberOfDefinitionsBySpeech + (self.checkSynonym ? 0 : 1)
+            return detailViewModel.numberOfDefinitionsBySpeech + (self.checkSynonym ? 1 : 0)
         }else {
-            return detailViewModel.numberOfDefinitions + (self.checkSynonym ? 0 : 1)
+            return detailViewModel.numberOfDefinitions + (self.checkSynonym ? 1 : 0)
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if !self.checkSynonym {
+        if self.checkSynonym {
             let totalRows = tableView.numberOfRows(inSection: indexPath.section)
             if totalRows - 1 == indexPath.row {
                 let synonymCell = tableView.dequeueReusableCell(withIdentifier: "SynonymTableViewCell") as! SynonymTableViewCell
@@ -228,16 +249,5 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-    }
-    
-    func goDetailPage(_ dictionary: Dictionary) {
-        removeFilter()
-        hideLoading()
-        let sendVC = UIStoryboard(name: "DetailView", bundle: nil)
-            .instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-        sendVC.detailViewModel = DetailViewModel(dictionary: dictionary)
-        sendVC.modalPresentationStyle = .fullScreen
-        sendVC.modalTransitionStyle = .coverVertical
-        self.present(sendVC, animated: true, completion: nil)
     }
 }

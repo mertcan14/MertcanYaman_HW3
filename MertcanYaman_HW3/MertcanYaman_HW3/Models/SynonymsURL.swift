@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SynonymsURL {
+enum SynonymsURL {
     private var baseURL: String { return "https://api.datamuse.com" }
     private var path: String { return "/words" }
     
@@ -16,7 +16,17 @@ public enum SynonymsURL {
     private var fullPath: String {
         var endpoint:String
         switch self {
-        case .wordAndMax(let wordString, let maxString):
+        case .wordAndMax(var wordString, let maxString):
+            let words = wordString.split(separator: " ")
+            wordString = ""
+            words.forEach { splitWord in
+                if splitWord == words[words.count - 1] {
+                    wordString += splitWord
+                }else {
+                    wordString += splitWord + "_"
+                }
+                
+            }
             endpoint = "?rel_syn=\(wordString)&max=\(maxString)"
         }
         return baseURL + path + endpoint

@@ -32,6 +32,7 @@
 		E5997C5E2A24B7B7009B4FEF /* MeaningTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5997C5C2A24B7B7009B4FEF /* MeaningTableViewCell.swift */; };
 		E5997C5F2A24B7B7009B4FEF /* MeaningTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5997C5D2A24B7B7009B4FEF /* MeaningTableViewCell.xib */; };
 		E5997C612A24CCDF009B4FEF /* DefinitionForCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5997C602A24CCDF009B4FEF /* DefinitionForCell.swift */; };
+		E5B54E342A28F56E00D9592B /* MyCoreData in Frameworks */ = {isa = PBXBuildFile; productRef = E5B54E332A28F56E00D9592B /* MyCoreData */; };
 		E5E127FE2A2260330026A32D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E127FD2A2260330026A32D /* LoadingView.swift */; };
 		E5E128002A2260460026A32D /* LoadingShowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E127FF2A2260460026A32D /* LoadingShowable.swift */; };
 		E5E128032A2260860026A32D /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E128012A2260860026A32D /* RecentSearchTableViewCell.swift */; };
@@ -69,6 +70,7 @@
 		E5997C5C2A24B7B7009B4FEF /* MeaningTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningTableViewCell.swift; sourceTree = "<group>"; };
 		E5997C5D2A24B7B7009B4FEF /* MeaningTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeaningTableViewCell.xib; sourceTree = "<group>"; };
 		E5997C602A24CCDF009B4FEF /* DefinitionForCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionForCell.swift; sourceTree = "<group>"; };
+		E5B54E322A28F1D400D9592B /* MyCoreData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MyCoreData; path = ../MyCoreData; sourceTree = "<group>"; };
 		E5E127FD2A2260330026A32D /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E5E127FF2A2260460026A32D /* LoadingShowable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingShowable.swift; sourceTree = "<group>"; };
 		E5E128012A2260860026A32D /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E574C7BE2A20CE080046D674 /* DictionaryAPI in Frameworks */,
+				E5B54E342A28F56E00D9592B /* MyCoreData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +96,7 @@
 		E538853C2A20B5EA0049531B = {
 			isa = PBXGroup;
 			children = (
+				E5B54E322A28F1D400D9592B /* MyCoreData */,
 				E574C7BB2A20CCF20046D674 /* DictionaryAPI */,
 				E53885472A20B5EA0049531B /* MertcanYaman_HW3 */,
 				E53885462A20B5EA0049531B /* Products */,
@@ -252,6 +256,7 @@
 			name = MertcanYaman_HW3;
 			packageProductDependencies = (
 				E574C7BD2A20CE080046D674 /* DictionaryAPI */,
+				E5B54E332A28F56E00D9592B /* MyCoreData */,
 			);
 			productName = MertcanYaman_HW3;
 			productReference = E53885452A20B5EA0049531B /* World of Words.app */;
@@ -556,6 +561,10 @@
 		E574C7BD2A20CE080046D674 /* DictionaryAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DictionaryAPI;
+		};
+		E5B54E332A28F56E00D9592B /* MyCoreData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MyCoreData;
 		};
 /* End XCSwiftPackageProductDependency section */
 

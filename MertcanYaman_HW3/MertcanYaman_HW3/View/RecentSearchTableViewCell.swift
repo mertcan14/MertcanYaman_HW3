@@ -7,9 +7,8 @@
 
 import UIKit
 
-class RecentSearchTableViewCell: UITableViewCell {
+final class RecentSearchTableViewCell: UITableViewCell {
 
-    
     @IBOutlet weak var rightArrow: UIImageView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var containerView: UIView!

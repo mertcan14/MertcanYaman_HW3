@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SynonymTableViewCell" rowHeight="256" id="KGk-i7-Jjw" customClass="SynonymTableViewCell" customModule="MertcanYaman_HW3" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SynonymTableViewCell" rowHeight="256" id="KGk-i7-Jjw" customClass="SynonymTableViewCell" customModule="World_of_Words" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="321" height="256"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -28,7 +28,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="lMa-p5-ukI">
                                 <rect key="frame" x="16" y="16" width="289" height="92"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Ro-pc-3UQ">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="firstBaseline" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Ro-pc-3UQ">
                                         <rect key="frame" x="0.0" y="0.0" width="289" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="xor-hO-gIP"/>

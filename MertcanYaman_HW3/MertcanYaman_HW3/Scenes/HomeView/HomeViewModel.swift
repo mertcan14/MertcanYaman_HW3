@@ -7,8 +7,9 @@
 
 import Foundation
 import DictionaryAPI
-import CoreData
+import MyCoreData
 
+// MARK: Protocol HomeViewModelDelegate
 protocol HomeViewModelDelegate: AnyObject {
     func alertFunc(_ message: String)
     func goDetailPage(_ dictionary: Dictionary)
@@ -17,6 +18,7 @@ protocol HomeViewModelDelegate: AnyObject {
     func reloadTableData()
 }
 
+// MARK: Protocol HomeViewModelProtocol
 protocol HomeViewModelProtocol {
     var delegate: HomeViewModelDelegate? { get set }
     var numberOfWordHistory: Int { get }
@@ -27,6 +29,7 @@ protocol HomeViewModelProtocol {
     func fetchWordFromCore(_ appDelegate: AppDelegate)
 }
 
+// MARK: Home View Model
 final class HomeViewModel {
     var delegate: HomeViewModelDelegate?
     var dataDictionary: Dictionary?
@@ -55,69 +58,37 @@ final class HomeViewModel {
     }
     
     func fetchWordHistory(_ appDelegate: AppDelegate) {
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WordHistory")
-        fetchRequest.fetchLimit = 5
-        let sort = NSSortDescriptor(key: "addedDate", ascending: false)
-            fetchRequest.sortDescriptors = [sort]
-        do {
-            let results = try context.fetch(fetchRequest)
-            if results.count > 0 {
-                self.wordHistory.removeAll()
-                for result in results as! [NSManagedObject] {
-                    guard let word = result.value(forKey: "word") as? String else { return }
-                    self.wordHistory.append(word)
-                }
+        let persistent = appDelegate.persistentContainer
+        MyCoreDataService.shared.fetchWordHistory(persistent, maxObject: 5, entityName: "WordHistory", sortKey: "addedDate") { [weak self] response in
+            guard let self = self else { return }
+            switch response.self {
+            case .success(let words):
+                self.wordHistory = words
+            case .failure(let error):
+                self.delegate?.alertFunc(error.message ?? "error")
             }
-        }catch {
-            print("error")
         }
     }
     
     func addWordHistory(_ appDelegate: AppDelegate, _ word: String) {
-        let context = appDelegate.persistentContainer.viewContext
-        guard let nsObject = checkWordHistory(appDelegate, word) else {
-            let wordHistory = NSEntityDescription.insertNewObject(forEntityName: "WordHistory", into: context)
-            wordHistory.setValue(word, forKey: "word")
-            wordHistory.setValue(Date(), forKey: "addedDate")
-            wordHistory.setValue(UUID(), forKey: "id")
-            do {
-                try context.save()
-                fetchWordHistory(appDelegate)
-            }catch {
-                print(error)
+        let context = appDelegate.persistentContainer
+        let addWord: [String: Any] = [
+            "word": word,
+            "addedDate": Date(),
+            "id": UUID()
+        ]
+        MyCoreDataService.shared.addWordHistory(persistentContainer: context, entityName: "WordHistory", addObj: addWord, word: word) { response in
+            switch response.self {
+            case .success(_):
+                self.fetchWordHistory(appDelegate)
+            case .failure(let error):
+                self.delegate?.alertFunc(error.message ?? "")
             }
-            return
         }
-        nsObject.setValue(Date(), forKey: "addedDate")
-        
-        do {
-            try context.save()
-            fetchWordHistory(appDelegate)
-        }catch {
-            print(error)
-        }
-    }
-    
-    private func checkWordHistory(_ appDelegate: AppDelegate, _ word: String) -> NSManagedObject? {
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WordHistory")
-        let predicate = NSPredicate(format: "word = %@", "\(word)")
-        fetchRequest.predicate = predicate
-        do {
-            let results = try context.fetch(fetchRequest)
-            if results.count > 0 {
-                for result in results as! [NSManagedObject] {
-                    return result
-                }
-            }
-        }catch {
-            delegate?.alertFunc(error.localizedDescription)
-        }
-        return nil
     }
 }
 
+// MARK: Extension HomeViewModelProtocol
 extension HomeViewModel: HomeViewModelProtocol {
     func addWordFromCore(_ appDelegate: AppDelegate, _ word: String) {
         self.addWordHistory(appDelegate, word.lowercased())
