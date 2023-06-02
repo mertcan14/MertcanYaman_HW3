@@ -9,9 +9,7 @@ import Foundation
 import CoreData
 
 public enum CoreDataError: Error {
-    case emptyDataError
     case operationFailed
-    case emptyEntity
     case maxObjectNegative
     case error(Error)
     
@@ -19,21 +17,18 @@ public enum CoreDataError: Error {
         switch self {
         case .operationFailed:
             return "We encountered an unexpected error"
-        case .error(let error):
-            return error.localizedDescription
-        case .emptyDataError:
-            return "We couldn't find the result you were looking for"
-        case .emptyEntity:
-            return "The data table you were looking for was not found"
         case .maxObjectNegative:
             return "The value to be returned cannot be negative."
+            
+        case .error(let error):
+            return error.localizedDescription
         }
     }
 }
 
 public class MyCoreDataService {
     public static let shared = MyCoreDataService()
-    
+    /// Fetch data from Core Data
     public func fetchWordHistory(_ persistentContainer: NSPersistentContainer,
                                  maxObject: Int?,
                                  entityName: String,
@@ -71,6 +66,7 @@ public class MyCoreDataService {
         }
     }
     
+    /// Add data from Core Data 
     public func addWordHistory( persistentContainer: NSPersistentContainer,
                                 entityName: String,
                                 addObj: [String:Any],
@@ -100,7 +96,10 @@ public class MyCoreDataService {
         }
     }
     
-    private func checkWordHistory(_ persistentContainer: NSPersistentContainer, entityName: String, word: String) -> NSManagedObject? {
+    /// Returns Row if word is already inserted, returns nil if there is no row
+    private func checkWordHistory(_ persistentContainer: NSPersistentContainer,
+                                  entityName: String,
+                                  word: String) -> NSManagedObject? {
         let context = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         let predicate = NSPredicate(format: "word = %@", "\(word)")

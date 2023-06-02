@@ -78,7 +78,9 @@ final class DetailViewModel {
     // MARK: - Fetch Funcs
     func fetchDataFromSynonyms() {
         delegate?.showLoading()
-        DictionaryService.shared.getSynonymsByWordAndMax(self.dataDictionary.word ?? "", "5") { [weak self] response in
+        DictionaryService.shared
+            .getSynonymsByWordAndMax(self.dataDictionary.word ?? "", "5")
+        { [weak self] response in
             guard let self else { return }
             switch response {
             case.success(let synonyms):
@@ -242,8 +244,9 @@ extension DetailViewModel: DetailViewModelProtocol {
     }
     
     func getWord() -> (String, String)? {
-        guard let phonetics = self.dataDictionary.phonetics else { return nil }
-        guard let word = self.dataDictionary.word else { return nil }
+        guard let phonetics = self.dataDictionary.phonetics,
+              let word = self.dataDictionary.word
+              else { return nil }
         
         for phonetic in phonetics {
             if phonetic.text != "", let text = phonetic.text {

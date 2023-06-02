@@ -58,8 +58,14 @@ final class HomeViewModel {
     }
     
     func fetchWordHistory(_ appDelegate: AppDelegate) {
+        
         let persistent = appDelegate.persistentContainer
-        MyCoreDataService.shared.fetchWordHistory(persistent, maxObject: 5, entityName: "WordHistory", sortKey: "addedDate") { [weak self] response in
+        MyCoreDataService.shared
+            .fetchWordHistory(persistent,
+                         maxObject: 5,
+                         entityName: "WordHistory",
+                         sortKey: "addedDate")
+        { [weak self] response in
             guard let self = self else { return }
             switch response.self {
             case .success(let words):
@@ -71,13 +77,21 @@ final class HomeViewModel {
     }
     
     func addWordHistory(_ appDelegate: AppDelegate, _ word: String) {
+        
         let context = appDelegate.persistentContainer
         let addWord: [String: Any] = [
             "word": word,
             "addedDate": Date(),
             "id": UUID()
         ]
-        MyCoreDataService.shared.addWordHistory(persistentContainer: context, entityName: "WordHistory", addObj: addWord, word: word) { response in
+        
+        MyCoreDataService.shared
+            .addWordHistory(persistentContainer: context,
+                            entityName: "WordHistory",
+                            addObj: addWord,
+                            word: word)
+        { [weak self] response in
+            guard let self = self else { return }
             switch response.self {
             case .success(_):
                 self.fetchWordHistory(appDelegate)
